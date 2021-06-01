@@ -8,6 +8,7 @@ import (
 	"net/http"
 )
 
+// JSONApplicationType is the MIME type for JSON requests/responses
 const JSONApplicationType = "application/json"
 
 // DoJSONRequest sends a client JSON request and decodes the body back to what should be a struct.
