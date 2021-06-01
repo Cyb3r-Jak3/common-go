@@ -41,11 +41,10 @@ jobs:
 
     - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        path: go
 
     - name: Lint
       run: |
+        cd go
         go get -u golang.org/x/lint/golint
         go vet .
         golint -set_exit_status 
