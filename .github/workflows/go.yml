@@ -42,9 +42,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Lint
+    - name: Setup
       run: |
         cd go
         go get -u golang.org/x/lint/golint
+
+    - name: Lint
+      run: |
         go vet .
         golint -set_exit_status 
