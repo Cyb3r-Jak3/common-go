@@ -44,7 +44,7 @@ jobs:
 
     - name: Lint
       run: |
-        cd go
         go get -u golang.org/x/lint/golint
+        cd go
         go vet .
         golint -set_exit_status 

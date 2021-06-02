@@ -29,7 +29,7 @@ func DoJSONRequest(method string, url string, requestBody interface{}, responseB
 	if err != nil {
 		return err
 	}
-	//Set headers to give best change at JSON response
+	//Set headers to give best chance at JSON response
 	req.Header.Add("content-type", JSONApplicationType)
 	req.Header.Add("Accept", JSONApplicationType)
 	resp, err := http.DefaultClient.Do(req)
