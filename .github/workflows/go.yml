@@ -9,6 +9,8 @@ on:
     paths:
       - '**.go'
       - .github/workflows/go.yml
+      - "go.mod"
+      - "go.sum"
 
 
 jobs:
