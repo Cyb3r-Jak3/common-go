@@ -4,16 +4,20 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
-	"log"
 	"net/http"
 )
 
 // JSONApplicationType is the MIME type for JSON requests/responses
 const JSONApplicationType = "application/json"
 
-// DoJSONRequest sends a client JSON request and decodes the body back to what should be a struct.
-// If a blank string is passed then it will default to a POST request
-func DoJSONRequest(method string, url string, requestBody interface{}, responseBody interface{}) (interface{}, error) {
+// DoJSONRequest sends a client JSON request. The responseBody should be a pointer to the address of a struct.
+// If a blank string is passed then it will default to a POST request.
+// Example:
+//
+// var response exampleStruct
+//
+// if err := DoJSONRequest("POST", "http://example.com", nil, &response),
+func DoJSONRequest(method string, url string, requestBody interface{}, responseBody interface{}) error {
 	if method == "" {
 		method = "POST"
 	}
@@ -23,15 +27,14 @@ func DoJSONRequest(method string, url string, requestBody interface{}, responseB
 	}
 	req, err := http.NewRequest(method, url, payloadBuf)
 	if err != nil {
-		log.Printf("Got error encoding: '%s'", err)
-		return nil, err
+		return err
 	}
 	//Set headers to give best change at JSON response
 	req.Header.Add("content-type", JSONApplicationType)
 	req.Header.Add("Accept", JSONApplicationType)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	switch responseBody := responseBody.(type) {
 	case nil:
@@ -43,5 +46,5 @@ func DoJSONRequest(method string, url string, requestBody interface{}, responseB
 		}
 	}
 
-	return responseBody, err
+	return err
 }
