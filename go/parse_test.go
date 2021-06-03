@@ -84,9 +84,14 @@ func TestFileSecret(t *testing.T) {
 		t.Errorf("Wanted blank output. Got %s", secret)
 	}
 	os.Setenv("test_FILE", "test")
-	secret = common.GetEnvSecret("test_FILE")
+	secret = common.GetEnvSecret("test")
 	if secret != testData {
 		t.Errorf("Error getting secret file. Wanted 'SecretSecret' got %s", secret)
+	}
+	os.Setenv("test_FILE", "emptyfile")
+	secret = common.GetEnvSecret("test")
+	if secret != "" {
+		t.Errorf("Wanted blank output for missing file. Got %s", secret)
 	}
 	os.Remove("test")
 }
