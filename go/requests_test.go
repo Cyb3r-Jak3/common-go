@@ -1,6 +1,7 @@
 package common_test
 
 import (
+	"strings"
 	"testing"
 
 	common "github.com/Cyb3r-Jak3/common/go"
@@ -44,7 +45,7 @@ func TestErrors(t *testing.T) {
 	)
 	if err == nil {
 		t.Error("Got no error and wanted one")
-	} else if err.Error() != "Post \"example.com\": unsupported protocol scheme \"\"" || err.Error() != "Post example.com: unsupported protocol scheme \"\"" { // || needed for 1.13 support
+	} else if !strings.Contains(err.Error(), "unsupported protocol scheme") {
 		t.Errorf("Wanted bad protocol scheme and got %s", err)
 	}
 	if resp != nil {
