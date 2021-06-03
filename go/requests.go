@@ -23,7 +23,7 @@ const JSONApplicationType = "application/json"
 // response := new(exampleStruct)
 //
 // resp, err := DoJSONRequest("POST", "http://example.com", nil, response)
-func DoJSONRequest(method string, url string, requestBody interface{}, responseBody interface{}) (*http.Response, error) {
+func DoJSONRequest(method, url string, requestBody, responseBody interface{}) (*http.Response, error) {
 	if method == "" {
 		method = "POST"
 	}
