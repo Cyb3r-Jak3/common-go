@@ -72,7 +72,7 @@ jobs:
         path: go/results.sarif
 
     - name: Coverage to Deepsource
-      if: env.DEEPSOURCE_DSN != null
+      if: ${{ runner.os == 'Linux' && env.DEEPSOURCE_DSN != null }}
       run: |
         curl https://deepsource.io/cli | sh
         ./bin/deepsource report --analyzer test-coverage --key go --value-file go/c.out
