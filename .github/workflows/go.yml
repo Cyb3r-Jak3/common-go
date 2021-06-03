@@ -46,7 +46,7 @@ jobs:
     - name: Setup Extra
       run: |
         go get -u golang.org/x/lint/golint
-        go get -u github.com/securego/gosec/v2/cmd/gosec@v2.8.0
+        curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
 
     - name: Lint
       run: |
@@ -60,21 +60,21 @@ jobs:
         go test -race -v -coverprofile="c.out"
         go tool cover -func="c.out"
 
-    # - name: Gosec Security Scanner
-    #   run: |
-    #     cd go
-    #     gosec -no-fail -fmt sarif -out results.sarif ./...
+    - name: Gosec Security Scanner
+      run: |
+        cd go
+        gosec -no-fail -fmt json -out security.json ./...
 
     # - name: Upload SARIF file
     #   uses: github/codeql-action/upload-sarif@v1
     #   with:
     #     sarif_file: go/results.sarif
 
-    # - name: Sarif report
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: Report
-    #     path: go/results.sarif
+    - name: GoSec Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: Report
+        path: go/security.json
 
     - name: Coverage to Deepsource
       if: ${{ runner.os == 'Linux' && env.DEEPSOURCE_DSN != null }}
