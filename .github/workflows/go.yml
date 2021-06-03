@@ -60,3 +60,22 @@ jobs:
         go get -u github.com/securego/gosec/v2/cmd/gosec
         cd go
         gosec -no-fail -fmt sarif -out results.sarif ./...
+
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: results.sarif
+
+    - name: Sarif report
+      uses: actions/upload-artifact@v2
+      with:
+        name: Report
+        path: results.sarif
+
+    - name: Coverage to Deepsource
+      if: ${{ secrets.DEEPSOURCE_DSN != 0 }}
+      run: |
+        curl https://deepsource.io/cli | sh
+        ./bin/deepsource report --analyzer test-coverage --key go --value-file ./c.out
+      env: 
+        DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
