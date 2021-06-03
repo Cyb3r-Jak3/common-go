@@ -44,7 +44,7 @@ func TestErrors(t *testing.T) {
 	)
 	if err == nil {
 		t.Error("Got no error and wanted one")
-	} else if err.Error() != "Post \"example.com\": unsupported protocol scheme \"\"" {
+	} else if err.Error() != "Post \"example.com\": unsupported protocol scheme \"\"" || err.Error() != "Post example.com: unsupported protocol scheme \"\"" { // || needed for 1.13 support
 		t.Errorf("Wanted bad protocol scheme and got %s", err)
 	}
 	if resp != nil {
