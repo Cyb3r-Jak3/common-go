@@ -42,6 +42,7 @@ func ParseYamlOrJSON(fileName string, outputInterface interface{}) (err error) {
 // GetEnvSecret will get either a OS environment variable. If there is no environment variable set it will check to see if a variable with _FILE is set.
 // If so then it it will read the secret name as a filepath and return the content
 func GetEnvSecret(secretName string) (secret string) {
+	secretName = strings.ToUpper(secretName)
 	secret = os.Getenv(secretName)
 	if secret == "" {
 		filePath, isSet := os.LookupEnv(secretName + "_FILE")

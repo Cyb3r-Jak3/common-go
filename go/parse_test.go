@@ -62,7 +62,7 @@ func TestBadParse(t *testing.T) {
 }
 
 func TestEnvSecret(t *testing.T) {
-	os.Setenv("Hello", "World")
+	os.Setenv("HELLO", "World")
 	secret := common.GetEnvSecret("Hello")
 	if secret != "World" {
 		t.Errorf("Error getting Environment Variable. Wanted Hello and got %s", secret)
@@ -79,16 +79,16 @@ func TestFileSecret(t *testing.T) {
 	if err != nil {
 		t.Errorf("Unable to write testing file. Error: %s", err)
 	}
-	secret := common.GetEnvSecret("test_FILE")
+	secret := common.GetEnvSecret("TEST_FILE")
 	if secret != "" {
 		t.Errorf("Wanted blank output. Got %s", secret)
 	}
-	os.Setenv("test_FILE", "test")
+	os.Setenv("TEST_FILE", "test")
 	secret = common.GetEnvSecret("test")
 	if secret != testData {
 		t.Errorf("Error getting secret file. Wanted 'SecretSecret' got %s", secret)
 	}
-	os.Setenv("test_FILE", "emptyfile")
+	os.Setenv("TEST_FILE", "emptyfile")
 	secret = common.GetEnvSecret("test")
 	if secret != "" {
 		t.Errorf("Wanted blank output for missing file. Got %s", secret)
