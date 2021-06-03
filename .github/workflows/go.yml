@@ -60,21 +60,21 @@ jobs:
         go test -race -v -coverprofile="c.out"
         go tool cover -func="c.out"
 
-    - name: Gosec Security Scanner
-      run: |
-        cd go
-        gosec -no-fail -fmt sarif -out results.sarif ./...
+    # - name: Gosec Security Scanner
+    #   run: |
+    #     cd go
+    #     gosec -no-fail -fmt sarif -out results.sarif ./...
 
-    - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-        sarif_file: go/results.sarif
+    # - name: Upload SARIF file
+    #   uses: github/codeql-action/upload-sarif@v1
+    #   with:
+    #     sarif_file: go/results.sarif
 
-    - name: Sarif report
-      uses: actions/upload-artifact@v2
-      with:
-        name: Report
-        path: go/results.sarif
+    # - name: Sarif report
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: Report
+    #     path: go/results.sarif
 
     - name: Coverage to Deepsource
       if: ${{ runner.os == 'Linux' && env.DEEPSOURCE_DSN != null }}
