@@ -16,7 +16,13 @@ const JSONApplicationType = "application/json"
 //
 // var response exampleStruct
 //
-// if err := DoJSONRequest("POST", "http://example.com", nil, &response),
+// resp, err := DoJSONRequest("POST", "http://example.com", nil, &response)
+//
+// OR
+//
+// response := new(exampleStruct)
+//
+// resp, err := DoJSONRequest("POST", "http://example.com", nil, response)
 func DoJSONRequest(method string, url string, requestBody interface{}, responseBody interface{}) (*http.Response, error) {
 	if method == "" {
 		method = "POST"

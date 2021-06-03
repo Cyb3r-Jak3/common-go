@@ -48,3 +48,9 @@ jobs:
         cd go
         go vet .
         golint -set_exit_status 
+    
+    - name: Test
+      run: |
+        cd go
+        go test -race -v -coverprofile="c.out"
+        go tool cover -func="c.out
