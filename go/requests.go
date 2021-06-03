@@ -16,8 +16,14 @@ const JSONApplicationType = "application/json"
 //
 // var response exampleStruct
 //
-// if err := DoJSONRequest("POST", "http://example.com", nil, &response),
-func DoJSONRequest(method string, url string, requestBody interface{}, responseBody interface{}) error {
+// resp, err := DoJSONRequest("POST", "http://example.com", nil, &response)
+//
+// OR
+//
+// response := new(exampleStruct)
+//
+// resp, err := DoJSONRequest("POST", "http://example.com", nil, response)
+func DoJSONRequest(method, url string, requestBody, responseBody interface{}) (*http.Response, error) {
 	if method == "" {
 		method = "POST"
 	}
@@ -27,14 +33,14 @@ func DoJSONRequest(method string, url string, requestBody interface{}, responseB
 	}
 	req, err := http.NewRequest(method, url, payloadBuf)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	//Set headers to give best chance at JSON response
 	req.Header.Add("content-type", JSONApplicationType)
 	req.Header.Add("Accept", JSONApplicationType)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	switch responseBody := responseBody.(type) {
 	case nil:
@@ -46,5 +52,5 @@ func DoJSONRequest(method string, url string, requestBody interface{}, responseB
 		}
 	}
 
-	return err
+	return resp, err
 }

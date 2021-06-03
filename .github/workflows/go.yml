@@ -16,7 +16,6 @@ on:
 jobs:
   test:
     strategy:
-      fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         go: [ '1.16', '1.15', '1.14', '1.13' ]
@@ -44,9 +43,43 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Lint
+    - name: Setup Extra
       run: |
         go get -u golang.org/x/lint/golint
+        go get -u github.com/securego/gosec/v2/cmd/gosec@v2.8.0
+
+    - name: Lint
+      run: |
         cd go
         go vet .
         golint -set_exit_status 
+    
+    - name: Test
+      run: |
+        cd go
+        go test -race -v -coverprofile="c.out"
+        go tool cover -func="c.out"
+
+    - name: Gosec Security Scanner
+      run: |
+        cd go
+        gosec -no-fail -fmt sarif -out results.sarif ./...
+
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: go/results.sarif
+
+    - name: Sarif report
+      uses: actions/upload-artifact@v2
+      with:
+        name: Report
+        path: go/results.sarif
+
+    - name: Coverage to Deepsource
+      if: ${{ runner.os == 'Linux' && env.DEEPSOURCE_DSN != null }}
+      run: |
+        curl https://deepsource.io/cli | sh
+        ./bin/deepsource report --analyzer test-coverage --key go --value-file go/c.out
+      env: 
+        DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}

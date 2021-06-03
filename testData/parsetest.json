@@ -1,0 +1,9 @@
+{
+    "string": "string",
+    "int": 5,
+    "slice": [
+        "string 1",
+        "string 2"
+    ],
+    "bool": false
+}
