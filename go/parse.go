@@ -26,6 +26,7 @@ import (
 //
 // err := ParseYamlOrJSON("helloworld.yml" response); err != nil { log.Fatal(err)}
 func ParseYamlOrJSON(fileName string, outputInterface interface{}) (err error) {
+	fileName = filepath.Clean(fileName)
 	file, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		return
