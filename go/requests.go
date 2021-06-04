@@ -29,7 +29,9 @@ func DoJSONRequest(method, url string, requestBody, responseBody interface{}) (*
 	}
 	payloadBuf := new(bytes.Buffer)
 	if requestBody != nil {
-		json.NewEncoder(payloadBuf).Encode(requestBody)
+		if err := json.NewEncoder(payloadBuf).Encode(requestBody); err != nil {
+			return nil, err
+		}
 	}
 	req, err := http.NewRequest(method, url, payloadBuf)
 	if err != nil {
