@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"gopkg.in/yaml.v2"
@@ -49,6 +50,7 @@ func GetEnvSecret(secretName string) (secret string) {
 		if !isSet {
 			return ""
 		}
+		filePath = filepath.Clean(filePath)
 		file, err := ioutil.ReadFile(filePath)
 		if os.IsNotExist(err) {
 			return ""
