@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"gopkg.in/yaml.v2"
@@ -59,4 +60,31 @@ func GetEnvSecret(secretName string) (secret string) {
 		return string(file)
 	}
 	return
+}
+
+// StringSearch checks an array of strings to see if the target string is in it
+func StringSearch(target string, array []string) bool {
+	i := sort.SearchStrings(array, target)
+	if i < len(array) && array[i] == target {
+		return true
+	}
+	return false
+}
+
+// FloatSearch checks an array of float64 to see if the target float is in it
+func FloatSearch(target float64, array []float64) bool {
+	i := sort.SearchFloat64s(array, target)
+	if i < len(array) && array[i] == target {
+		return true
+	}
+	return false
+}
+
+// IntSearch checks an array of ints to see if the target int is in it
+func IntSearch(target int, array []int) bool {
+	i := sort.SearchInts(array, target)
+	if i < len(array) && array[i] == target {
+		return true
+	}
+	return false
 }
