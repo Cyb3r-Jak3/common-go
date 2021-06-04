@@ -95,3 +95,33 @@ func TestFileSecret(t *testing.T) {
 	}
 	os.Remove("test")
 }
+
+func TestStringSearch(t *testing.T) {
+	array := []string{"hello", "world"}
+	if !common.StringSearch("hello", array) {
+		t.Errorf("Wanted string in array but it was not found")
+	}
+	if common.StringSearch("fail", array) {
+		t.Errorf("Wanted false result and a string was found")
+	}
+}
+
+func TestFloatSearch(t *testing.T) {
+	array := []float64{1.1, 1.2}
+	if !common.FloatSearch(1.1, array) {
+		t.Errorf("Wanted flat in array but it was not found")
+	}
+	if common.FloatSearch(1.3, array) {
+		t.Errorf("Wanted false result and a float was found")
+	}
+}
+
+func TestIntSearch(t *testing.T) {
+	array := []int{1, 2}
+	if !common.IntSearch(1, array) {
+		t.Errorf("Wanted int in array but it was not found")
+	}
+	if common.IntSearch(3, array) {
+		t.Errorf("Wanted false result and a int was found")
+	}
+}
