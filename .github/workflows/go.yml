@@ -49,21 +49,14 @@ jobs:
         go get -u github.com/securego/gosec/v2/cmd/gosec@v2.8.0
 
     - name: Lint
-      run: |
-        cd go
-        go vet .
-        golint -set_exit_status 
+      run: make lint
     
     - name: Test
-      run: |
-        cd go
-        go test -race -v -coverprofile="c.out"
-        go tool cover -func="c.out"
+      run: make test
+
 
     - name: Gosec Security Scanner
-      run: |
-        cd go
-        gosec -no-fail -fmt json -out security.json ./...
+      run: make scan
 
     # - name: Upload SARIF file
     #   uses: github/codeql-action/upload-sarif@v1
@@ -80,6 +73,6 @@ jobs:
       if: ${{ runner.os == 'Linux' && env.DEEPSOURCE_DSN != null }}
       run: |
         curl https://deepsource.io/cli | sh
-        ./bin/deepsource report --analyzer test-coverage --key go --value-file go/c.out
+        ./bin/deepsource report --analyzer test-coverage --key go --value-file c.out
       env: 
         DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
