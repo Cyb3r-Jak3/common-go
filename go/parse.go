@@ -88,3 +88,12 @@ func IntSearch(target int, array []int) bool {
 	}
 	return false
 }
+
+//GetEnv checks if the key exists in the environment variables. If yes then returns that value and if not returns default value
+func GetEnv(key, fallback string) string {
+	value, exists := os.LookupEnv(key)
+	if !exists {
+		value = fallback
+	}
+	return value
+}
