@@ -125,3 +125,16 @@ func TestIntSearch(t *testing.T) {
 		t.Errorf("Wanted false result and a int was found")
 	}
 }
+
+func TestGetEnv(t *testing.T) {
+	os.Setenv("test", "value")
+	returnValue := common.GetEnv("test", "")
+	if returnValue != "value" {
+		t.Errorf("Wanted 'value' and got %s", returnValue)
+	}
+	returnValue = common.GetEnv("missing", "test")
+	if returnValue != "test" {
+		t.Errorf("Wanted 'test' and got %s", returnValue)
+	}
+	os.Unsetenv("test")
+}

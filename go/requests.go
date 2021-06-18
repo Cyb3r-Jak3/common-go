@@ -18,7 +18,7 @@ const JSONApplicationType = "application/json"
 //
 // resp, err := DoJSONRequest("POST", "http://example.com", nil, &response)
 //
-// OR
+// or
 //
 // response := new(exampleStruct)
 //
