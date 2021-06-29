@@ -9,6 +9,7 @@ import (
 	"strings"
 )
 
+// JSONApplicationType is MIME type for json data
 const JSONApplicationType = "application/json; charset=utf-8"
 
 // AllowedMethod is a decorator to get methods
@@ -41,7 +42,7 @@ func JSONResponse(w http.ResponseWriter, response []byte) {
 	}
 }
 
-// JSONResponse writes a http response as JSON. Takes interface as input
+// JSONMarshalResponse writes a http response as JSON. Takes interface as input
 func JSONMarshalResponse(w http.ResponseWriter, body interface{}) {
 	w.Header().Set("Content-Type", JSONApplicationType)
 	w.WriteHeader(http.StatusOK)
