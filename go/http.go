@@ -18,6 +18,7 @@ func AllowedMethod(handler http.HandlerFunc, methods string) http.HandlerFunc {
 		for _, b := range strings.Split(methods, ",") {
 			if b == req.Method {
 				handler(w, req)
+				return
 			}
 		}
 		http.Error(w, "Method not Allowed", http.StatusMethodNotAllowed)
