@@ -20,3 +20,6 @@ test:
 
 scan:
 	gosec -no-fail -fmt sarif -out security.sarif ./...
+
+bench:
+	go test -bench=. ./...

@@ -15,14 +15,13 @@ const JSONApplicationType = "application/json; charset=utf-8"
 // AllowedMethod is a decorator to get methods
 func AllowedMethod(handler http.HandlerFunc, methods string) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		for _, b := range strings.Split(methods, ",") {
-			if b == req.Method {
-				handler(w, req)
-				return
-			}
+		if StringSearch(req.Method, strings.Split(methods, ",")) {
+			handler(w, req)
+			return
 		}
 		http.Error(w, "Method not Allowed", http.StatusMethodNotAllowed)
 	}
+
 }
 
 // StringResponse writes a http response as a string
