@@ -11,7 +11,7 @@ func TestGoodHash(t *testing.T) {
 	if err != nil {
 		t.Errorf("Wanted a good hash and got %s", err.Error())
 	}
-	if hashed != "e2bd6bdb41b8337bf19f0363674998a1319bed52" {
+	if hashed != "d22157abc0fc0b4ae96380c09528e23cf77290a9" {
 		t.Errorf("Mismatched hash. Got %s", hashed)
 	}
 }
