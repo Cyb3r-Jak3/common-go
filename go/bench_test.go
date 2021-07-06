@@ -145,11 +145,6 @@ func BenchmarkGetEnvMissing(b *testing.B) {
 	}
 }
 
-func BenchmarkSHA1(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		common.HashFile("1", "hash.go")
-	}
-}
 func BenchmarkSHA256(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		common.HashFile("256", "hash.go")

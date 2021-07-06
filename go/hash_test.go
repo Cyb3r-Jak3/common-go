@@ -7,11 +7,11 @@ import (
 )
 
 func TestGoodHash(t *testing.T) {
-	hashed, err := common.HashFile("sha1", "../LICENSE")
+	hashed, err := common.HashFile("256", "../LICENSE")
 	if err != nil {
 		t.Errorf("Wanted a good hash and got %s", err.Error())
 	}
-	if hashed != "d22157abc0fc0b4ae96380c09528e23cf77290a9" {
+	if hashed != "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5" {
 		t.Errorf("Mismatched hash. Got %s", hashed)
 	}
 }
@@ -31,7 +31,7 @@ func TestUnknownHash(t *testing.T) {
 }
 
 func TestHashers(t *testing.T) {
-	for _, i := range []string{"1", "256", "384", "512"} {
+	for _, i := range []string{"256", "384", "512"} {
 		_, err := common.HashFile(i, "../LICENSE")
 		if err != nil {
 			t.Errorf("Wanted a good hash with %s and got %s", i, err.Error())

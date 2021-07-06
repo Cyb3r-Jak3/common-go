@@ -1,7 +1,6 @@
 package common
 
 import (
-	"crypto/sha1"
 	"crypto/sha256"
 	"crypto/sha512"
 	"fmt"
@@ -10,7 +9,7 @@ import (
 	"os"
 )
 
-//HashFile generates a string hash of the given file path. Supported hashing algorithm: sha1, sha256, sha384, and sha512. Recommend at least sha256
+//HashFile generates a string hash of the given file path. Supported hashing algorithm: sha256, sha384, and sha512.
 func HashFile(algorithm string, filepath string) (value string, err error) {
 	f, err := os.Open(filepath) // #nosec
 	if err != nil {
@@ -19,8 +18,6 @@ func HashFile(algorithm string, filepath string) (value string, err error) {
 	}
 	var hasher hash.Hash
 	switch algorithm {
-	case "sha1", "1":
-		hasher = sha1.New()
 	case "sha256", "256":
 		hasher = sha256.New()
 	case "sha384", "384":
