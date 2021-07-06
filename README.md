@@ -8,20 +8,27 @@ Tested with go versions 1.13 to 1.16.
 
 ### Benchmark
 
-    BenchmarkJSONResponse-2      	 1361775	       908.0 ns/op	    1024 B/op	      10 allocs/op
-    BenchmarkWOAllowedMethod-2   	 1374057	       869.0 ns/op	    1016 B/op	      10 allocs/op
-    BenchmarkAllowedMethod-2     	 1000000	      1038 ns/op	    1064 B/op	      12 allocs/op
-    BenchmarkContentResponse-2   	 1378454	       859.3 ns/op	    1013 B/op	      10 allocs/op
-    BenchmarkStringResponse-2    	 1360341	       869.7 ns/op	    1016 B/op	      10 allocs/op
-    BenchmarkJSONMarshall-2      	 1000000	      1119 ns/op	    1024 B/op	      10 allocs/op
-    BenchmarkGenerate-2          	  700604	      1746 ns/op
-    BenchmarkJSONParse-2         	  124810	      9510 ns/op	    1096 B/op	      12 allocs/op
-    BenchmarkYAMLParse-2         	   59620	     20274 ns/op	    7616 B/op	      84 allocs/op
-    BenchmarkStringSearch2-2     	51719239	        23.08 ns/op
-    BenchmarkStringSearch10-2    	29695441	        40.16 ns/op
-    BenchmarkFloatSearch2-2      	100000000	        10.15 ns/op
-    BenchmarkFloatSearch10-2     	69445460	        16.40 ns/op
-    BenchmarkIntSearch2-2        	80205716	        12.94 ns/op
-    BenchmarkIntSearch10-2       	60177013	        18.84 ns/op
-    BenchmarkGetEnv-2            	30803790	        39.05 ns/op	       0 B/op	       0 allocs/op
-    BenchmarkGetEnvMissing-2     	32854902	        36.49 ns/op
+Benchmarks are taken from latest-ubuntu and go version 1.16.
+
+```
+BenchmarkJSONResponse-2      	 1155928	      1016 ns/op	    1024 B/op	      10 allocs/op
+BenchmarkWOAllowedMethod-2   	 1000000	      1039 ns/op	    1016 B/op	      10 allocs/op
+BenchmarkAllowedMethod-2     	 1000000	      1206 ns/op	    1064 B/op	      12 allocs/op
+BenchmarkContentResponse-2   	 1000000	      1021 ns/op	    1013 B/op	      10 allocs/op
+BenchmarkStringResponse-2    	 1000000	      1040 ns/op	    1016 B/op	      10 allocs/op
+BenchmarkJSONMarshall-2      	  933313	      1343 ns/op	    1024 B/op	      10 allocs/op
+BenchmarkGenerate-2          	  614492	      1982 ns/op
+BenchmarkJSONParse-2         	  106275	     11315 ns/op	    1096 B/op	      12 allocs/op
+BenchmarkYAMLParse-2         	   49432	     23725 ns/op	    7616 B/op	      84 allocs/op
+BenchmarkStringSearch2-2     	44019916	        26.47 ns/op
+BenchmarkStringSearch10-2    	25348384	        46.87 ns/op
+BenchmarkFloatSearch2-2      	99105530	        11.99 ns/op
+BenchmarkFloatSearch10-2     	61142461	        18.78 ns/op
+BenchmarkIntSearch2-2        	80376837	        15.03 ns/op
+BenchmarkIntSearch10-2       	54109246	        22.17 ns/op
+BenchmarkGetEnv-2            	26952231	        46.96 ns/op	       0 B/op	       0 allocs/op
+BenchmarkGetEnvMissing-2     	24062250	        50.51 ns/op
+BenchmarkSHA256-2            	   62689	     18296 ns/op
+BenchmarkSHA384-2            	   70474	     17190 ns/op
+BenchmarkSHA512-2            	   69765	     17052 ns/op
+```
