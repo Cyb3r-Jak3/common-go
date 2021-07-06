@@ -10,10 +10,11 @@ import (
 	"os"
 )
 
-func HashFile(algorithm string, filename string) (value string, err error) {
-	f, err := os.Open(filename) // #nosec
+//HashFile generates a string hash of the given file path. Supported hashing algorithm: sha1, sha256, sha384, and sha512. Recommend at least sha256
+func HashFile(algorithm string, filepath string) (value string, err error) {
+	f, err := os.Open(filepath) // #nosec
 	if err != nil {
-		err = fmt.Errorf("couldn't open %s. error reason %s", filename, err.Error())
+		err = fmt.Errorf("couldn't open %s. error reason %s", filepath, err.Error())
 		return
 	}
 	var hasher hash.Hash
@@ -31,13 +32,13 @@ func HashFile(algorithm string, filename string) (value string, err error) {
 		return
 	}
 	if _, err = io.Copy(hasher, f); err != nil {
-		err = fmt.Errorf("couldn't hash %s. error reason %s", filename, err.Error())
+		err = fmt.Errorf("couldn't hash %s. error reason %s", filepath, err.Error())
 		return
 	}
 	if err = f.Close(); err != nil {
 		err = fmt.Errorf("error closing file: %s", err.Error())
 		return
 	}
-	value = string(hasher.Sum(nil))
+	value = fmt.Sprintf("%x", hasher.Sum(nil))
 	return
 }
