@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -105,4 +106,27 @@ func DoJSONRequest(method, url string, requestBody, responseBody interface{}) (*
 	}
 
 	return resp, err
+}
+
+// DownloadFile downloads a file and writes it to the file path. Overwrites any file at the path
+func DownloadFile(url, filename string) (ok bool, err error) {
+	out, err := os.Create(filename)
+	if err != nil {
+		return false, err
+	}
+	resp, err := http.Get(url)
+	if err != nil {
+		return false, err
+	}
+	if _, err := io.Copy(out, resp.Body); err != nil {
+		return false, err
+	}
+	if err := resp.Body.Close(); err != nil {
+		return false, err
+	}
+	if err := out.Close(); err != nil {
+		return false, err
+	}
+	return true, nil
+
 }

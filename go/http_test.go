@@ -2,6 +2,7 @@ package common_test
 
 import (
 	"net/http"
+	"os"
 	"strings"
 	"testing"
 
@@ -117,5 +118,36 @@ func TestGoodRequest(t *testing.T) {
 	}
 	if resp.StatusCode != 200 {
 		t.Errorf("Wanted status code and got %d", resp.StatusCode)
+	}
+}
+
+func TestDownload(t *testing.T) {
+	ok, err := common.DownloadFile(
+		"https://raw.githubusercontent.com/Cyb3r-Jak3/Cyb3r-Jak3/main/README.md",
+		"test.md",
+	)
+	if !ok || err != nil {
+		t.Errorf("Download status: %t. Error Message: %s", ok, err)
+	}
+	os.Remove("test.md")
+}
+
+func TestFailedDownload(t *testing.T) {
+	ok, err := common.DownloadFile(
+		"",
+		"test.md",
+	)
+	if ok || err == nil {
+		t.Errorf("Download status: %t. Error Message: %s", ok, err)
+	}
+}
+
+func TestWriteDownload(t *testing.T) {
+	ok, err := common.DownloadFile(
+		"https://raw.githubusercontent.com/Cyb3r-Jak3/Cyb3r-Jak3/main/README.md",
+		"",
+	)
+	if ok || err == nil {
+		t.Errorf("Download status: %t. Error Message: %s", ok, err)
 	}
 }
