@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	common "github.com/Cyb3r-Jak3/common"
+	common "github.com/Cyb3r-Jak3/common/v2"
 )
 
 type requestBody struct {
