@@ -97,3 +97,16 @@ func GetEnv(key, fallback string) string {
 	}
 	return value
 }
+
+//SkipRoot skips the root struct of a JSON message. Taken from https://stackoverflow.com/a/20873511
+func SkipRoot(jsonBlob []byte) json.RawMessage {
+	var root map[string]json.RawMessage
+
+	if err := json.Unmarshal(jsonBlob, &root); err != nil {
+		panic(err)
+	}
+	for _, v := range root {
+		return v
+	}
+	return nil
+}
