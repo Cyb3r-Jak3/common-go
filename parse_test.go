@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"testing"
 
-	common "github.com/Cyb3r-Jak3/common/go"
+	common "github.com/Cyb3r-Jak3/common/v2"
 )
 
 type testStruct struct {
@@ -25,7 +25,7 @@ var expectedStruct = &testStruct{
 
 func TestJSONParse(t *testing.T) {
 	testStruct := new(testStruct)
-	err := common.ParseYamlOrJSON("../testData/parsetest.json", testStruct)
+	err := common.ParseYamlOrJSON("./testData/parsetest.json", testStruct)
 	if err != nil {
 		t.Errorf("Got an error when reading the test json file. Error: %s", err)
 	}
@@ -37,7 +37,7 @@ func TestJSONParse(t *testing.T) {
 
 func TestYAMLParse(t *testing.T) {
 	testStruct := new(testStruct)
-	err := common.ParseYamlOrJSON("../testData/parsetest.yml", testStruct)
+	err := common.ParseYamlOrJSON("./testData/parsetest.yml", testStruct)
 	if err != nil {
 		t.Errorf("Got an error when reading the test yaml file. Error: %s", err)
 	}

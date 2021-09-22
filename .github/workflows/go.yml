@@ -78,3 +78,8 @@ jobs:
         ./bin/deepsource report --analyzer test-coverage --key go --value-file c.out
       env: 
         DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
+      
+    - uses: codecov/codecov-action@v2
+      with:
+        files: c.out
+        fail_ci_if_error: true
