@@ -1,6 +1,7 @@
 package common_test
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"os"
 	"reflect"
@@ -137,4 +138,35 @@ func TestGetEnv(t *testing.T) {
 		t.Errorf("Wanted 'test' and got %s", returnValue)
 	}
 	os.Unsetenv("test")
+}
+
+type KeyValue struct {
+	Value string `json:"key"`
+}
+
+func TestSkipRoot(t *testing.T) {
+	jsonString := `{"root": {"key": "value"}}`
+	var Encoded KeyValue
+	json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
+	if Encoded.Value != "value" {
+		t.Errorf("Wanted 'value' and got %s", Encoded.Value)
+	}
+}
+
+func TestSkipRootMissingRoot(t *testing.T) {
+	jsonString := `{"key": "value"}`
+	var Encoded KeyValue
+	json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
+
+	if Encoded.Value != "" {
+		t.Errorf("Wanted '' and got %s", Encoded.Value)
+	}
+}
+
+func TestSkipRootMissing(t *testing.T) {
+	defer func() { recover() }()
+	jsonString := ``
+	var Encoded KeyValue
+	json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
+	t.Errorf("Did not panic")
 }

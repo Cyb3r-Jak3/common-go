@@ -140,6 +140,7 @@ func TestFailedDownload(t *testing.T) {
 	if ok || err == nil {
 		t.Errorf("Download status: %t. Error Message: %s", ok, err)
 	}
+	os.Remove("test.md")
 }
 
 func TestWriteDownload(t *testing.T) {
