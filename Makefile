@@ -11,8 +11,8 @@ else
 endif
 
 lint:
-	go vet ./go/
-	golint -set_exit_status go/
+	go vet ./...
+	golint -set_exit_status ./...
 
 test:
 	go test -race -v -coverprofile="c.out" ./...

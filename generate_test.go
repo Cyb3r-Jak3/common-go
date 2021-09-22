@@ -3,7 +3,7 @@ package common_test
 import (
 	"testing"
 
-	common "github.com/Cyb3r-Jak3/common/go"
+	common "github.com/Cyb3r-Jak3/common"
 )
 
 func TestGenerate(t *testing.T) {

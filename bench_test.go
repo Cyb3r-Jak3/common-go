@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	common "github.com/Cyb3r-Jak3/common/go"
+	common "github.com/Cyb3r-Jak3/common"
 )
 
 func BenchmarkJSONResponse(b *testing.B) {
