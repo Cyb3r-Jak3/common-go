@@ -3,7 +3,7 @@ package common_test
 import (
 	"testing"
 
-	common "github.com/Cyb3r-Jak3/common/v2"
+	common "github.com/Cyb3r-Jak3/common/v3"
 )
 
 func TestGoodHash(t *testing.T) {
