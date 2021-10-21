@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"testing"
 
-	common "github.com/Cyb3r-Jak3/common/v2"
+	"github.com/Cyb3r-Jak3/common/v3"
 )
 
 type testStruct struct {
