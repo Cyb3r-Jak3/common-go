@@ -1,4 +1,9 @@
-package common
+package colors
+
+import (
+	"fmt"
+	"strings"
+)
 
 // Integer codes for common colors
 const (
@@ -31,3 +36,8 @@ const (
 	White             = 16777215
 	Yellow            = 16705372
 )
+
+//ToHex convert a color int into a uppercase hex representation
+func ToHex(color int) string{
+	return strings.ToUpper(fmt.Sprintf("%x", color))
+}
