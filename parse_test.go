@@ -164,9 +164,32 @@ func TestSkipRootMissingRoot(t *testing.T) {
 }
 
 func TestSkipRootMissing(t *testing.T) {
-	defer func() { recover() }()
 	jsonString := ``
 	var Encoded KeyValue
 	json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
-	t.Errorf("Did not panic")
+	if Encoded.Value != "" {
+		t.Errorf("Wanted '' and got %s", Encoded.Value)
+	}
+}
+
+func TestSkipRootwithErrorMissing(t *testing.T) {
+	jsonString := ``
+	_, err := common.SkipRootwithError([]byte(jsonString))
+	if err == nil {
+		t.Error("Wanted an error and did not get one")
+	}
+}
+
+func TestSkipRootwithErrorMissingRoot(t *testing.T) {
+	jsonString := `{"key": "value"}`
+	value, err := common.SkipRootwithError([]byte(jsonString))
+	if err != nil {
+		t.Error("Wanted an error and did not get one")
+	}
+	var Encoded KeyValue
+	json.Unmarshal(value, &Encoded)
+
+	if Encoded.Value != "" {
+		t.Errorf("Wanted '' and got %s", Encoded.Value)
+	}
 }

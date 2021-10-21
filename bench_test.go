@@ -5,7 +5,8 @@ import (
 	"os"
 	"testing"
 
-	common "github.com/Cyb3r-Jak3/common/v2"
+	"github.com/Cyb3r-Jak3/common/v2"
+	"github.com/Cyb3r-Jak3/common/v2/colors"
 )
 
 func BenchmarkJSONResponse(b *testing.B) {
@@ -160,5 +161,18 @@ func BenchmarkSHA384(b *testing.B) {
 func BenchmarkSHA512(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		common.HashFile("512", "hash.go")
+	}
+}
+
+func BenchmarkToHex(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		colors.ToHex(colors.Aqua)
+	}
+}
+
+func BenchmarkSkipRoot(b *testing.B) {
+	jsonString := `{"root": {"key": "value"}}`
+	for i := 0; i < b.N; i++ {
+		common.SkipRoot([]byte(jsonString))
 	}
 }
