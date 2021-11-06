@@ -117,8 +117,8 @@ func SkipRoot(jsonBlob []byte) (values json.RawMessage) {
 	return
 }
 
-//EnvironMap returns a string map of environment variables 
-func EnvironMap() (map[string]string) {
+//EnvironMap returns a string map of environment variables
+func EnvironMap() map[string]string {
 	results := make(map[string]string)
 	for _, x := range os.Environ() {
 		item := strings.SplitN(x, "=", 2)
