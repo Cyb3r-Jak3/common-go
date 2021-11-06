@@ -116,3 +116,13 @@ func SkipRoot(jsonBlob []byte) (values json.RawMessage) {
 	values, _ = SkipRootwithError(jsonBlob)
 	return
 }
+
+//EnvironMap returns a string map of environment variables 
+func EnvironMap() (map[string]string) {
+	results := make(map[string]string)
+	for _, x := range os.Environ() {
+		item := strings.SplitN(x, "=", 2)
+		results[item[0]] = item[1]
+	}
+	return results
+}

@@ -29,6 +29,9 @@ jobs:
       with:
         go-version: ${{ matrix.go }}
 
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - uses: actions/cache@v2.1.6
       with:
         path: |
@@ -40,16 +43,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-go-
 
-    - name: Checkout code
-      uses: actions/checkout@v2
-
     - name: Setup Extra
       run: |
-        go get -u golang.org/x/lint/golint
         go get -u github.com/securego/gosec/v2/cmd/gosec@v2.8.0
-
-    - name: Lint
-      run: make lint
     
     - name: Test
       run: make test

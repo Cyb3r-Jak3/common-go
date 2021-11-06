@@ -176,3 +176,9 @@ func BenchmarkSkipRoot(b *testing.B) {
 		common.SkipRoot([]byte(jsonString))
 	}
 }
+
+func BenchmarkEnvironMap(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		common.EnvironMap()
+	}
+}

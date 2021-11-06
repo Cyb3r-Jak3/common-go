@@ -193,3 +193,20 @@ func TestSkipRootwithErrorMissingRoot(t *testing.T) {
 		t.Errorf("Wanted '' and got %s", Encoded.Value)
 	}
 }
+
+func TestEnvironMap(t *testing.T){
+	os.Setenv("Test", "value")
+	os.Setenv("TestWithEquals", "value=value")
+	result := common.EnvironMap()
+	if len(result) == 0 {
+		t.Error("Returned map has no length")
+	}
+	if result["Test"] != "value" {
+		t.Errorf("Wanted 'test' and got %s", result["test"])
+	}
+	if result["TestWithEquals"] != "value=value" {
+		t.Errorf("Wanted 'value=value' and got %s", result["TestWithEquals"])
+	}
+	os.Unsetenv("test")
+	os.Setenv("TestWithEquals", "value=value")
+}
