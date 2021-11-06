@@ -3,7 +3,7 @@ package common_test
 import (
 	"testing"
 
-	"github.com/Cyb3r-Jak3/common/v3"
+	"github.com/Cyb3r-Jak3/common/v4"
 )
 
 func TestGenerate(t *testing.T) {

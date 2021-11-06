@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/Cyb3r-Jak3/common/v3"
-	"github.com/Cyb3r-Jak3/common/v3/colors"
+	"github.com/Cyb3r-Jak3/common/v4"
+	"github.com/Cyb3r-Jak3/common/v4/colors"
 )
 
 func BenchmarkJSONResponse(b *testing.B) {

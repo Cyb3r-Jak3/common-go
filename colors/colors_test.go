@@ -3,7 +3,7 @@ package colors_test
 import (
 	"testing"
 
-	"github.com/Cyb3r-Jak3/common/v3/colors"
+	"github.com/Cyb3r-Jak3/common/v4/colors"
 )
 
 func TestColors(t *testing.T) {
