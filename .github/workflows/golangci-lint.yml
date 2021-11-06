@@ -34,5 +34,5 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           version: latest
-          args: -E revive,gofmt
+          args: -E revive,gofmt --tests=false
           skip-go-installation: true
