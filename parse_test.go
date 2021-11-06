@@ -147,7 +147,7 @@ type KeyValue struct {
 func TestSkipRoot(t *testing.T) {
 	jsonString := `{"root": {"key": "value"}}`
 	var Encoded KeyValue
-	json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
+	_ = json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
 	if Encoded.Value != "value" {
 		t.Errorf("Wanted 'value' and got %s", Encoded.Value)
 	}
@@ -156,7 +156,7 @@ func TestSkipRoot(t *testing.T) {
 func TestSkipRootMissingRoot(t *testing.T) {
 	jsonString := `{"key": "value"}`
 	var Encoded KeyValue
-	json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
+	_ = json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
 
 	if Encoded.Value != "" {
 		t.Errorf("Wanted '' and got %s", Encoded.Value)
@@ -166,7 +166,7 @@ func TestSkipRootMissingRoot(t *testing.T) {
 func TestSkipRootMissing(t *testing.T) {
 	jsonString := ``
 	var Encoded KeyValue
-	json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
+	_ = json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
 	if Encoded.Value != "" {
 		t.Errorf("Wanted '' and got %s", Encoded.Value)
 	}
@@ -187,9 +187,26 @@ func TestSkipRootwithErrorMissingRoot(t *testing.T) {
 		t.Error("Wanted an error and did not get one")
 	}
 	var Encoded KeyValue
-	json.Unmarshal(value, &Encoded)
+	_ = json.Unmarshal(value, &Encoded)
 
 	if Encoded.Value != "" {
 		t.Errorf("Wanted '' and got %s", Encoded.Value)
 	}
+}
+
+func TestEnvironMap(t *testing.T) {
+	os.Setenv("Test", "value")
+	os.Setenv("TestWithEquals", "value=value")
+	result := common.EnvironMap()
+	if len(result) == 0 {
+		t.Error("Returned map has no length")
+	}
+	if result["Test"] != "value" {
+		t.Errorf("Wanted 'test' and got %s", result["test"])
+	}
+	if result["TestWithEquals"] != "value=value" {
+		t.Errorf("Wanted 'value=value' and got %s", result["TestWithEquals"])
+	}
+	os.Unsetenv("test")
+	os.Setenv("TestWithEquals", "value=value")
 }

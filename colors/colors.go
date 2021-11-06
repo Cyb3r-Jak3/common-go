@@ -38,6 +38,6 @@ const (
 )
 
 //ToHex convert a color int into a uppercase hex representation
-func ToHex(color int) string{
+func ToHex(color int) string {
 	return strings.ToUpper(fmt.Sprintf("%x", color))
 }
