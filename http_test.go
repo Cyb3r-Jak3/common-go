@@ -40,7 +40,7 @@ func TestAllowedMethod(t *testing.T) {
 	r, _ := http.NewRequest("GET", "/", nil)
 	rr := executeRequest(r, common.AllowedMethod(StringTest, "POST"))
 	checkResponse(t, rr, http.StatusMethodNotAllowed)
-	r, _ = http.NewRequest("GET", "/", nil)
+	r, _ = http.NewRequest("POST", "/", nil)
 	rr = executeRequest(r, common.AllowedMethod(StringTest, "GET,POST"))
 	checkResponse(t, rr, http.StatusOK)
 }
