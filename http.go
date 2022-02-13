@@ -14,7 +14,7 @@ import (
 const JSONApplicationType = "application/json; charset=utf-8"
 
 // AllowedMethod is a decorator to get methods
-func AllowedMethod(handler http.HandlerFunc, methods string) http.HandlerFunc {
+func AllowedMethods(handler http.HandlerFunc, methods string) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		if StringSearch(req.Method, strings.Split(methods, ",")) {
 			handler(w, req)

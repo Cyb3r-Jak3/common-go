@@ -38,10 +38,10 @@ func ContentTest(w http.ResponseWriter, _ *http.Request) {
 
 func TestAllowedMethod(t *testing.T) {
 	r, _ := http.NewRequest("GET", "/", nil)
-	rr := executeRequest(r, common.AllowedMethod(StringTest, "POST"))
+	rr := executeRequest(r, common.AllowedMethods(StringTest, "POST"))
 	checkResponse(t, rr, http.StatusMethodNotAllowed)
 	r, _ = http.NewRequest("POST", "/", nil)
-	rr = executeRequest(r, common.AllowedMethod(StringTest, "GET,POST"))
+	rr = executeRequest(r, common.AllowedMethods(StringTest, "GET,POST"))
 	checkResponse(t, rr, http.StatusOK)
 }
 

@@ -32,7 +32,7 @@ func BenchmarkAllowedMethod(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		executeRequest(r, common.AllowedMethod(StringTest, "GET"))
+		executeRequest(r, common.AllowedMethods(StringTest, "GET"))
 	}
 }
 
