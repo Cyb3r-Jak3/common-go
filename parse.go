@@ -64,6 +64,7 @@ func GetEnvSecret(secretName string) (secret string) {
 
 // StringSearch checks an array of strings to see if the target string is in it
 func StringSearch(target string, array []string) bool {
+	sort.Strings(array)
 	i := sort.SearchStrings(array, target)
 	if i < len(array) && array[i] == target {
 		return true
@@ -73,6 +74,7 @@ func StringSearch(target string, array []string) bool {
 
 // FloatSearch checks an array of float64 to see if the target float is in it
 func FloatSearch(target float64, array []float64) bool {
+	sort.Float64s(array)
 	i := sort.SearchFloat64s(array, target)
 	if i < len(array) && array[i] == target {
 		return true
@@ -82,6 +84,7 @@ func FloatSearch(target float64, array []float64) bool {
 
 // IntSearch checks an array of ints to see if the target int is in it
 func IntSearch(target int, array []int) bool {
+	sort.Ints(array)
 	i := sort.SearchInts(array, target)
 	if i < len(array) && array[i] == target {
 		return true

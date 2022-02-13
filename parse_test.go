@@ -102,6 +102,9 @@ func TestStringSearch(t *testing.T) {
 	if !common.StringSearch("hello", array) {
 		t.Errorf("Wanted string in array but it was not found")
 	}
+	if !common.StringSearch("world", array) {
+		t.Errorf("Wanted string in array but it was not found")
+	}
 	if common.StringSearch("fail", array) {
 		t.Errorf("Wanted false result and a string was found")
 	}
