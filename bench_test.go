@@ -27,12 +27,21 @@ func BenchmarkWOAllowedMethod(b *testing.B) {
 	}
 }
 
-func BenchmarkAllowedMethod(b *testing.B) {
+func BenchmarkAllowedMethods(b *testing.B) {
 	r, _ := http.NewRequest("GET", "/", nil)
 	b.ReportAllocs()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		executeRequest(r, common.AllowedMethods(StringTest, "GET"))
+	}
+}
+
+func BenchmarkDeniedAllowedMethods(b *testing.B) {
+	r, _ := http.NewRequest("GET", "/", nil)
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		executeRequest(r, common.AllowedMethods(StringTest, "POST"))
 	}
 }
 
