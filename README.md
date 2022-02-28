@@ -9,30 +9,31 @@ Tested with go versions 1.16 & 1.17.
 
 ### Benchmark
 
-Benchmarks are taken from latest-ubuntu and go version 1.16.
+Benchmarks are taken from latest-ubuntu and go version 1.17.
 
 ```
-BenchmarkJSONResponse-2      	 1392727	       859.1 ns/op	    1024 B/op	      10 allocs/op
-BenchmarkWOAllowedMethod-2   	 1257962	       890.7 ns/op	    1016 B/op	      10 allocs/op
-BenchmarkAllowedMethod-2     	 1000000	      1010 ns/op	    1064 B/op	      12 allocs/op
-BenchmarkContentResponse-2   	 1403922	       856.2 ns/op	    1013 B/op	      10 allocs/op
-BenchmarkStringResponse-2    	 1373049	       866.9 ns/op	    1016 B/op	      10 allocs/op
-BenchmarkJSONMarshall-2      	 1000000	      1103 ns/op	    1024 B/op	      10 allocs/op
-BenchmarkGenerate-2          	  687927	      1759 ns/op
-BenchmarkJSONParse-2         	  736328	      1734 ns/op	      80 B/op	       2 allocs/op
-BenchmarkYAMLParse-2         	  731004	      1747 ns/op	      80 B/op	       2 allocs/op
-BenchmarkStringSearch2-2     	52436001	        22.40 ns/op
-BenchmarkStringSearch10-2    	29598258	        39.59 ns/op
-BenchmarkFloatSearch2-2      	100000000	        10.19 ns/op
-BenchmarkFloatSearch10-2     	73469235	        16.32 ns/op
-BenchmarkIntSearch2-2        	93743188	        12.67 ns/op
-BenchmarkIntSearch10-2       	64075212	        18.75 ns/op
-BenchmarkGetEnv-2            	30846982	        38.88 ns/op	       0 B/op	       0 allocs/op
-BenchmarkGetEnvMissing-2     	31355505	        37.83 ns/op
-BenchmarkSHA256-2            	   72594	     16070 ns/op
-BenchmarkSHA384-2            	   78955	     15485 ns/op
-BenchmarkSHA512-2            	   77162	     15605 ns/op
-BenchmarkToHex-2             	 7395942	       166.2 ns/op
-BenchmarkSkipRoot-2          	  812551	      1494 ns/op
-BenchmarkEnvironMap-2        	   45308	     26414 ns/op
+BenchmarkJSONResponse-2           	 1513520	       767.4 ns/op	    1024 B/op	      10 allocs/op
+BenchmarkWOAllowedMethod-2        	 1550850	       773.7 ns/op	    1016 B/op	      10 allocs/op
+BenchmarkAllowedMethods-2         	 1271031	      1005 ns/op	    1088 B/op	      13 allocs/op
+BenchmarkDeniedAllowedMethods-2   	 1000000	      1213 ns/op	    1128 B/op	      14 allocs/op
+BenchmarkContentResponse-2        	 1555020	       776.5 ns/op	    1013 B/op	      10 allocs/op
+BenchmarkStringResponse-2         	 1527940	       782.8 ns/op	    1016 B/op	      10 allocs/op
+BenchmarkJSONMarshall-2           	 1264372	       965.7 ns/op	    1024 B/op	      10 allocs/op
+BenchmarkGenerate-2               	  764608	      1643 ns/op
+BenchmarkJSONParse-2              	  711868	      1589 ns/op	      80 B/op	       2 allocs/op
+BenchmarkYAMLParse-2              	  764983	      1600 ns/op	      80 B/op	       2 allocs/op
+BenchmarkStringSearch2-2          	16068895	        70.55 ns/op
+BenchmarkStringSearch10-2         	 6211059	       190.5 ns/op
+BenchmarkFloatSearch2-2           	21945752	        54.78 ns/op
+BenchmarkFloatSearch10-2          	10253065	       122.2 ns/op
+BenchmarkIntSearch2-2             	21588042	        56.26 ns/op
+BenchmarkIntSearch10-2            	11035240	       117.7 ns/op
+BenchmarkGetEnv-2                 	30184161	        38.63 ns/op	       0 B/op	       0 allocs/op
+BenchmarkGetEnvMissing-2          	32234304	        37.16 ns/op
+BenchmarkSHA256-2                 	   81972	     14140 ns/op
+BenchmarkSHA384-2                 	   89167	     13359 ns/op
+BenchmarkSHA512-2                 	   90374	     14348 ns/op
+BenchmarkToHex-2                  	 7411296	       151.0 ns/op
+BenchmarkSkipRoot-2               	  966310	      1210 ns/op
+BenchmarkEnvironMap-2             	   52266	     22935 ns/op
 ```
