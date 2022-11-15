@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-//HashFile generates a string hash of the given file path. Supported hashing algorithm: sha256, sha384, and sha512.
+// HashFile generates a string hash of the given file path. Supported hashing algorithm: sha256, sha384, and sha512.
 func HashFile(algorithm string, filepath string) (value string, err error) {
 	f, err := os.Open(filepath) // #nosec
 	if err != nil {

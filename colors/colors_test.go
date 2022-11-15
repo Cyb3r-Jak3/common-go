@@ -2,7 +2,6 @@ package colors
 
 import (
 	"testing"
-
 )
 
 func TestColors(t *testing.T) {
@@ -14,7 +13,6 @@ func TestColors(t *testing.T) {
 		t.Errorf("Hex color should '1ABC9C' be and got %s", hexColor)
 	}
 }
-
 
 func BenchmarkToHex(b *testing.B) {
 	for i := 0; i < b.N; i++ {

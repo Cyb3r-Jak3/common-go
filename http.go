@@ -22,7 +22,6 @@ func AllowedMethods(handler http.HandlerFunc, methods string) http.HandlerFunc {
 		}
 		http.Error(w, "Method not Allowed", http.StatusMethodNotAllowed)
 	}
-
 }
 
 // StringResponse writes a http response as a string.
@@ -73,7 +72,7 @@ func ContentResponse(w http.ResponseWriter, contentType string, response []byte)
 //
 // response := new(exampleStruct)
 //
-// resp, err := DoJSONRequest("POST", "http://example.com", nil, response)
+// resp, err := DoJSONRequest("POST", "http://example.com", nil, response).
 func DoJSONRequest(method, url string, requestBody, responseBody interface{}) (*http.Response, error) {
 	if method == "" {
 		method = "POST"

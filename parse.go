@@ -3,13 +3,10 @@ package common
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sort"
 	"strings"
-
-	"gopkg.in/yaml.v3"
 )
 
 // ParseYamlOrJSON will detect if a file is either a JSON or YAML file and marshal it to the provided interface.
@@ -21,14 +18,14 @@ import (
 //
 // if err := ParseYamlOrJSON("helloworld.json", &response); err != nil { log.Fatal(err)}
 //
-// OR
+// # OR
 //
 // response := new(exampleStruct)
 //
-// err := ParseYamlOrJSON("helloworld.yml" response); err != nil { log.Fatal(err)}
+// err := ParseYamlOrJSON("helloworld.yml" response); err != nil { log.Fatal(err)}.
 func ParseYamlOrJSON(fileName string, outputInterface interface{}) (err error) {
 	fileName = filepath.Clean(fileName)
-	file, err := ioutil.ReadFile(fileName)
+	file, err := os.ReadFile(fileName)
 	if err != nil {
 		return
 	}
@@ -43,7 +40,7 @@ func ParseYamlOrJSON(fileName string, outputInterface interface{}) (err error) {
 }
 
 // GetEnvSecret will get either a OS environment variable. If there is no environment variable set it will check to see if a variable with _FILE is set.
-// If so then it it will read the secret name as a filepath and return the content
+// If so then it will read the secret name as a filepath and return the content.
 func GetEnvSecret(secretName string) (secret string) {
 	secretName = strings.ToUpper(secretName)
 	secret = os.Getenv(secretName)
@@ -53,7 +50,7 @@ func GetEnvSecret(secretName string) (secret string) {
 			return ""
 		}
 		filePath = filepath.Clean(filePath)
-		file, err := ioutil.ReadFile(filePath)
+		file, err := os.ReadFile(filePath)
 		if os.IsNotExist(err) {
 			return ""
 		}
@@ -92,7 +89,7 @@ func IntSearch(target int, array []int) bool {
 	return false
 }
 
-//GetEnv checks if the key exists in the environment variables. If yes then returns that value and if not returns default value
+// GetEnv checks if the key exists in the environment variables. If yes then returns that value and if not returns default value
 func GetEnv(key, fallback string) string {
 	value, exists := os.LookupEnv(key)
 	if !exists {
@@ -101,7 +98,7 @@ func GetEnv(key, fallback string) string {
 	return value
 }
 
-//SkipRootwithError skips the root struct of a JSON message but will return an error. Taken from https://stackoverflow.com/a/20873511
+// SkipRootwithError skips the root struct of a JSON message but will return an error. Taken from https://stackoverflow.com/a/20873511
 func SkipRootwithError(jsonBlob []byte) (json.RawMessage, error) {
 	var root map[string]json.RawMessage
 
@@ -114,13 +111,13 @@ func SkipRootwithError(jsonBlob []byte) (json.RawMessage, error) {
 	return nil, nil
 }
 
-//SkipRoot skips the root struct of a JSON message but will return nil if an error happens. Taken from https://stackoverflow.com/a/20873511
+// SkipRoot skips the root struct of a JSON message but will return nil if an error happens. Taken from https://stackoverflow.com/a/20873511
 func SkipRoot(jsonBlob []byte) (values json.RawMessage) {
 	values, _ = SkipRootwithError(jsonBlob)
 	return
 }
 
-//EnvironMap returns a string map of environment variables
+// EnvironMap returns a string map of environment variables
 func EnvironMap() map[string]string {
 	results := make(map[string]string)
 	for _, x := range os.Environ() {

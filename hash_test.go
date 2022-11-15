@@ -2,7 +2,6 @@ package common
 
 import (
 	"testing"
-
 )
 
 func TestGoodHash(t *testing.T) {

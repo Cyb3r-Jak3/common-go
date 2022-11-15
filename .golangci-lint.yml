@@ -23,6 +23,7 @@ linters:
     - exportloopref  # prevent scope issues with pointers in loops.
     - goconst        # use constants where values are repeated.
     - reassign       # checks that package variables are not reassigned.
+    - gosec          # checks for security issues in Go code.
     - goimports      # checks import grouping and code formatting.
 
 output:

@@ -82,7 +82,6 @@ func BenchmarkJSONParse(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_ = ParseYamlOrJSON("../testdata/parsetest.json", testStruct)
 	}
-
 }
 
 func BenchmarkYAMLParse(b *testing.B) {
@@ -92,7 +91,6 @@ func BenchmarkYAMLParse(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_ = ParseYamlOrJSON("../testdata/parsetest.yml", testStruct)
 	}
-
 }
 
 func BenchmarkStringSearch2(b *testing.B) {

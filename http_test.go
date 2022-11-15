@@ -5,7 +5,6 @@ import (
 	"os"
 	"strings"
 	"testing"
-
 )
 
 type requestBody struct {
