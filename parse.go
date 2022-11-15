@@ -7,8 +7,6 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
-
-	"gopkg.in/yaml.v3"
 )
 
 // ParseYamlOrJSON will detect if a file is either a JSON or YAML file and marshal it to the provided interface.
@@ -34,7 +32,7 @@ func ParseYamlOrJSON(fileName string, outputInterface interface{}) (err error) {
 	if strings.HasSuffix(fileName, ".json") {
 		err = json.Unmarshal(file, outputInterface)
 	} else if strings.HasSuffix(fileName, ".yaml") || strings.HasSuffix(fileName, ".yml") {
-		err = yaml.
+		err = yaml.Unmarshal(file, outputInterface)
 	} else {
 		err = fmt.Errorf("unknown file extension for: %s", fileName)
 	}
