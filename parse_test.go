@@ -1,4 +1,4 @@
-package common_test
+package common
 
 import (
 	"encoding/json"
@@ -7,7 +7,6 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Cyb3r-Jak3/common/v4"
 )
 
 type testStruct struct {
@@ -26,7 +25,7 @@ var expectedStruct = &testStruct{
 
 func TestJSONParse(t *testing.T) {
 	testStruct := new(testStruct)
-	err := common.ParseYamlOrJSON("./testData/parsetest.json", testStruct)
+	err := ParseYamlOrJSON("./testData/parsetest.json", testStruct)
 	if err != nil {
 		t.Errorf("Got an error when reading the test json file. Error: %s", err)
 	}
@@ -38,7 +37,7 @@ func TestJSONParse(t *testing.T) {
 
 func TestYAMLParse(t *testing.T) {
 	testStruct := new(testStruct)
-	err := common.ParseYamlOrJSON("./testData/parsetest.yml", testStruct)
+	err := ParseYamlOrJSON("./testData/parsetest.yml", testStruct)
 	if err != nil {
 		t.Errorf("Got an error when reading the test yaml file. Error: %s", err)
 	}
@@ -50,12 +49,12 @@ func TestYAMLParse(t *testing.T) {
 
 func TestBadParse(t *testing.T) {
 	testStruct := new(testStruct)
-	err := common.ParseYamlOrJSON("no_file", testStruct)
+	err := ParseYamlOrJSON("no_file", testStruct)
 	if !os.IsNotExist(err) {
 		t.Errorf("Error with missing file. Wanted not exists error and got %s", err)
 	}
 	_ = ioutil.WriteFile("typo.jsno", []byte("test"), 0644)
-	err = common.ParseYamlOrJSON("typo.jsno", testStruct)
+	err = ParseYamlOrJSON("typo.jsno", testStruct)
 	if err.Error() != "unknown file extension for: typo.jsno" {
 		t.Errorf("Wanted error with bad file extension. Got %s", err)
 	}
@@ -64,11 +63,11 @@ func TestBadParse(t *testing.T) {
 
 func TestEnvSecret(t *testing.T) {
 	os.Setenv("HELLO", "World")
-	secret := common.GetEnvSecret("Hello")
+	secret := GetEnvSecret("Hello")
 	if secret != "World" {
 		t.Errorf("Error getting Environment Variable. Wanted Hello and got %s", secret)
 	}
-	secret = common.GetEnvSecret("World")
+	secret = GetEnvSecret("World")
 	if secret != "" {
 		t.Errorf("Error getting invalid environment variable. Wanted blank and got %s", secret)
 	}
@@ -80,17 +79,17 @@ func TestFileSecret(t *testing.T) {
 	if err != nil {
 		t.Errorf("Unable to write testing file. Error: %s", err)
 	}
-	secret := common.GetEnvSecret("TEST_FILE")
+	secret := GetEnvSecret("TEST_FILE")
 	if secret != "" {
 		t.Errorf("Wanted blank output. Got %s", secret)
 	}
 	os.Setenv("TEST_FILE", "test")
-	secret = common.GetEnvSecret("test")
+	secret = GetEnvSecret("test")
 	if secret != testData {
 		t.Errorf("Error getting secret file. Wanted 'SecretSecret' got %s", secret)
 	}
 	os.Setenv("TEST_FILE", "emptyfile")
-	secret = common.GetEnvSecret("test")
+	secret = GetEnvSecret("test")
 	if secret != "" {
 		t.Errorf("Wanted blank output for missing file. Got %s", secret)
 	}
@@ -99,44 +98,44 @@ func TestFileSecret(t *testing.T) {
 
 func TestStringSearch(t *testing.T) {
 	array := []string{"hello", "world"}
-	if !common.StringSearch("hello", array) {
+	if !StringSearch("hello", array) {
 		t.Errorf("Wanted string in array but it was not found")
 	}
-	if !common.StringSearch("world", array) {
+	if !StringSearch("world", array) {
 		t.Errorf("Wanted string in array but it was not found")
 	}
-	if common.StringSearch("fail", array) {
+	if StringSearch("fail", array) {
 		t.Errorf("Wanted false result and a string was found")
 	}
 }
 
 func TestFloatSearch(t *testing.T) {
 	array := []float64{1.1, 1.2}
-	if !common.FloatSearch(1.1, array) {
+	if !FloatSearch(1.1, array) {
 		t.Errorf("Wanted flat in array but it was not found")
 	}
-	if common.FloatSearch(1.3, array) {
+	if FloatSearch(1.3, array) {
 		t.Errorf("Wanted false result and a float was found")
 	}
 }
 
 func TestIntSearch(t *testing.T) {
 	array := []int{1, 2}
-	if !common.IntSearch(1, array) {
+	if !IntSearch(1, array) {
 		t.Errorf("Wanted int in array but it was not found")
 	}
-	if common.IntSearch(3, array) {
+	if IntSearch(3, array) {
 		t.Errorf("Wanted false result and a int was found")
 	}
 }
 
 func TestGetEnv(t *testing.T) {
 	os.Setenv("test", "value")
-	returnValue := common.GetEnv("test", "")
+	returnValue := GetEnv("test", "")
 	if returnValue != "value" {
 		t.Errorf("Wanted 'value' and got %s", returnValue)
 	}
-	returnValue = common.GetEnv("missing", "test")
+	returnValue = GetEnv("missing", "test")
 	if returnValue != "test" {
 		t.Errorf("Wanted 'test' and got %s", returnValue)
 	}
@@ -150,7 +149,7 @@ type KeyValue struct {
 func TestSkipRoot(t *testing.T) {
 	jsonString := `{"root": {"key": "value"}}`
 	var Encoded KeyValue
-	_ = json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
+	_ = json.Unmarshal(SkipRoot([]byte(jsonString)), &Encoded)
 	if Encoded.Value != "value" {
 		t.Errorf("Wanted 'value' and got %s", Encoded.Value)
 	}
@@ -159,7 +158,7 @@ func TestSkipRoot(t *testing.T) {
 func TestSkipRootMissingRoot(t *testing.T) {
 	jsonString := `{"key": "value"}`
 	var Encoded KeyValue
-	_ = json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
+	_ = json.Unmarshal(SkipRoot([]byte(jsonString)), &Encoded)
 
 	if Encoded.Value != "" {
 		t.Errorf("Wanted '' and got %s", Encoded.Value)
@@ -169,7 +168,7 @@ func TestSkipRootMissingRoot(t *testing.T) {
 func TestSkipRootMissing(t *testing.T) {
 	jsonString := ``
 	var Encoded KeyValue
-	_ = json.Unmarshal(common.SkipRoot([]byte(jsonString)), &Encoded)
+	_ = json.Unmarshal(SkipRoot([]byte(jsonString)), &Encoded)
 	if Encoded.Value != "" {
 		t.Errorf("Wanted '' and got %s", Encoded.Value)
 	}
@@ -177,7 +176,7 @@ func TestSkipRootMissing(t *testing.T) {
 
 func TestSkipRootwithErrorMissing(t *testing.T) {
 	jsonString := ``
-	_, err := common.SkipRootwithError([]byte(jsonString))
+	_, err := SkipRootwithError([]byte(jsonString))
 	if err == nil {
 		t.Error("Wanted an error and did not get one")
 	}
@@ -185,7 +184,7 @@ func TestSkipRootwithErrorMissing(t *testing.T) {
 
 func TestSkipRootwithErrorMissingRoot(t *testing.T) {
 	jsonString := `{"key": "value"}`
-	value, err := common.SkipRootwithError([]byte(jsonString))
+	value, err := SkipRootwithError([]byte(jsonString))
 	if err != nil {
 		t.Error("Wanted an error and did not get one")
 	}
@@ -200,7 +199,7 @@ func TestSkipRootwithErrorMissingRoot(t *testing.T) {
 func TestEnvironMap(t *testing.T) {
 	os.Setenv("Test", "value")
 	os.Setenv("TestWithEquals", "value=value")
-	result := common.EnvironMap()
+	result := EnvironMap()
 	if len(result) == 0 {
 		t.Error("Returned map has no length")
 	}

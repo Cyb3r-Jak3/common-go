@@ -1,17 +1,23 @@
-package colors_test
+package colors
 
 import (
 	"testing"
 
-	"github.com/Cyb3r-Jak3/common/v4/colors"
 )
 
 func TestColors(t *testing.T) {
-	if colors.Aqua != 1752220 {
+	if Aqua != 1752220 {
 		t.Error("Aqua color is wrong")
 	}
-	hexColor := colors.ToHex(colors.Aqua)
+	hexColor := ToHex(Aqua)
 	if hexColor != "1ABC9C" {
 		t.Errorf("Hex color should '1ABC9C' be and got %s", hexColor)
+	}
+}
+
+
+func BenchmarkToHex(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		ToHex(Aqua)
 	}
 }

@@ -9,7 +9,7 @@ import (
 	"sort"
 	"strings"
 
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 // ParseYamlOrJSON will detect if a file is either a JSON or YAML file and marshal it to the provided interface.
