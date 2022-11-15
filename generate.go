@@ -6,7 +6,7 @@ import (
 	"math/big"
 )
 
-// GenerateRandInt securely generate a random int64. The input is the maximun value that the random int can be
+// GenerateRandInt securely generate a random int64. The input is the maximum value that the random int can be.
 func GenerateRandInt(x int) (returnValue int, returnError error) {
 	if x <= 0 {
 		return 0, errors.New("need a row amount of greater than 0")

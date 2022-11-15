@@ -5,7 +5,7 @@
 
 This repo contains common code that I use between my programs. There are currently some tests and at some point I *might* get around to writing more.
 
-Tested with go versions 1.16 & 1.17.
+Tested with go versions 1.18 & 1.19.
 
 ### Benchmark
 

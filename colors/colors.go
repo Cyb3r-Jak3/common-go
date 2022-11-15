@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-// Integer codes for common colors
+// Integer codes for common colors.
 const (
 	Aqua              = 1752220
 	Black             = 2303786
@@ -37,7 +37,7 @@ const (
 	Yellow            = 16705372
 )
 
-//ToHex convert a color int into a uppercase hex representation
+//ToHex convert a color int into a uppercase hex representation.
 func ToHex(color int) string {
 	return strings.ToUpper(fmt.Sprintf("%x", color))
 }

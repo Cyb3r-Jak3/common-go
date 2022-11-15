@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-// JSONApplicationType is MIME type for json data
+// JSONApplicationType is MIME type for JSON data.
 const JSONApplicationType = "application/json; charset=utf-8"
 
 // AllowedMethod is a decorator to get methods
@@ -25,7 +25,7 @@ func AllowedMethods(handler http.HandlerFunc, methods string) http.HandlerFunc {
 
 }
 
-// StringResponse writes a http response as a string
+// StringResponse writes a http response as a string.
 func StringResponse(w http.ResponseWriter, response string) {
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
@@ -34,7 +34,7 @@ func StringResponse(w http.ResponseWriter, response string) {
 	}
 }
 
-// JSONResponse writes a http response as JSON. Taking a byte array as input
+// JSONResponse writes a http response as JSON. Takes a byte array as input.
 func JSONResponse(w http.ResponseWriter, response []byte) {
 	w.Header().Set("Content-Type", JSONApplicationType)
 	w.WriteHeader(http.StatusOK)
@@ -43,7 +43,7 @@ func JSONResponse(w http.ResponseWriter, response []byte) {
 	}
 }
 
-// JSONMarshalResponse writes a http response as JSON. Takes interface as input
+// JSONMarshalResponse writes a http response as JSON. Takes an interface.
 func JSONMarshalResponse(w http.ResponseWriter, body interface{}) {
 	w.Header().Set("Content-Type", JSONApplicationType)
 	w.WriteHeader(http.StatusOK)
@@ -52,7 +52,7 @@ func JSONMarshalResponse(w http.ResponseWriter, body interface{}) {
 	}
 }
 
-// ContentResponse writes a http response with a given content type
+// ContentResponse writes a http response with a given content type.
 func ContentResponse(w http.ResponseWriter, contentType string, response []byte) {
 	w.Header().Set("Content-Type", contentType)
 	w.WriteHeader(http.StatusOK)
