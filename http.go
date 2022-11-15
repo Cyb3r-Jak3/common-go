@@ -13,7 +13,7 @@ import (
 // JSONApplicationType is MIME type for JSON data.
 const JSONApplicationType = "application/json; charset=utf-8"
 
-// AllowedMethod is a decorator to get methods
+// AllowedMethods is a decorator to only allow comma seperated methods.
 func AllowedMethods(handler http.HandlerFunc, methods string) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		if StringSearch(req.Method, strings.Split(methods, ",")) {
@@ -108,7 +108,7 @@ func DoJSONRequest(method, url string, requestBody, responseBody interface{}) (*
 	return resp, err
 }
 
-// DownloadFile downloads a file and writes it to the file path. Overwrites any file at the path
+// DownloadFile downloads a file and writes it to the file path. Overwrites any file at the path.
 func DownloadFile(url, filename string) (ok bool, err error) {
 	out, err := os.Create(filename)
 	if err != nil {
@@ -128,5 +128,4 @@ func DownloadFile(url, filename string) (ok bool, err error) {
 		return false, err
 	}
 	return true, nil
-
 }

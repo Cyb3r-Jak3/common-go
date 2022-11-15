@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"os"
 	"testing"
-
 )
 
 func BenchmarkJSONResponse(b *testing.B) {
@@ -81,7 +80,7 @@ func BenchmarkJSONParse(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_ = ParseYamlOrJSON("../testData/parsetest.json", testStruct)
+		_ = ParseYamlOrJSON("../testdata/parsetest.json", testStruct)
 	}
 
 }
@@ -91,7 +90,7 @@ func BenchmarkYAMLParse(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_ = ParseYamlOrJSON("../testData/parsetest.yml", testStruct)
+		_ = ParseYamlOrJSON("../testdata/parsetest.yml", testStruct)
 	}
 
 }

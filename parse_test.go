@@ -6,7 +6,6 @@ import (
 	"os"
 	"reflect"
 	"testing"
-
 )
 
 type testStruct struct {
@@ -25,7 +24,7 @@ var expectedStruct = &testStruct{
 
 func TestJSONParse(t *testing.T) {
 	testStruct := new(testStruct)
-	err := ParseYamlOrJSON("./testData/parsetest.json", testStruct)
+	err := ParseYamlOrJSON("./testdata/parsetest.json", testStruct)
 	if err != nil {
 		t.Errorf("Got an error when reading the test json file. Error: %s", err)
 	}
@@ -37,7 +36,7 @@ func TestJSONParse(t *testing.T) {
 
 func TestYAMLParse(t *testing.T) {
 	testStruct := new(testStruct)
-	err := ParseYamlOrJSON("./testData/parsetest.yml", testStruct)
+	err := ParseYamlOrJSON("./testdata/parsetest.yml", testStruct)
 	if err != nil {
 		t.Errorf("Got an error when reading the test yaml file. Error: %s", err)
 	}
@@ -130,9 +129,10 @@ func TestIntSearch(t *testing.T) {
 }
 
 func TestGetEnv(t *testing.T) {
-	os.Setenv("test", "value")
+	expectedValue := "value"
+	os.Setenv("test", expectedValue)
 	returnValue := GetEnv("test", "")
-	if returnValue != "value" {
+	if returnValue != expectedValue {
 		t.Errorf("Wanted 'value' and got %s", returnValue)
 	}
 	returnValue = GetEnv("missing", "test")
