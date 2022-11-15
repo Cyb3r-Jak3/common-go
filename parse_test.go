@@ -174,17 +174,17 @@ func TestSkipRootMissing(t *testing.T) {
 	}
 }
 
-func TestSkipRootwithErrorMissing(t *testing.T) {
+func TestSkipRootWithErrorMissing(t *testing.T) {
 	jsonString := ``
-	_, err := SkipRootwithError([]byte(jsonString))
+	_, err := SkipRootWithError([]byte(jsonString))
 	if err == nil {
 		t.Error("Wanted an error and did not get one")
 	}
 }
 
-func TestSkipRootwithErrorMissingRoot(t *testing.T) {
+func TestSkipRootWithErrorMissingRoot(t *testing.T) {
 	jsonString := `{"key": "value"}`
-	value, err := SkipRootwithError([]byte(jsonString))
+	value, err := SkipRootWithError([]byte(jsonString))
 	if err != nil {
 		t.Error("Wanted an error and did not get one")
 	}

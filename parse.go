@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+
+	"gopkg.in/yaml.v3"
 )
 
 // ParseYamlOrJSON will detect if a file is either a JSON or YAML file and marshal it to the provided interface.
@@ -98,8 +100,8 @@ func GetEnv(key, fallback string) string {
 	return value
 }
 
-// SkipRootwithError skips the root struct of a JSON message but will return an error. Taken from https://stackoverflow.com/a/20873511
-func SkipRootwithError(jsonBlob []byte) (json.RawMessage, error) {
+// SkipRootWithError skips the root struct of a JSON message but will return an error. Taken from https://stackoverflow.com/a/20873511
+func SkipRootWithError(jsonBlob []byte) (json.RawMessage, error) {
 	var root map[string]json.RawMessage
 
 	if err := json.Unmarshal(jsonBlob, &root); err != nil {
@@ -113,7 +115,7 @@ func SkipRootwithError(jsonBlob []byte) (json.RawMessage, error) {
 
 // SkipRoot skips the root struct of a JSON message but will return nil if an error happens. Taken from https://stackoverflow.com/a/20873511
 func SkipRoot(jsonBlob []byte) (values json.RawMessage) {
-	values, _ = SkipRootwithError(jsonBlob)
+	values, _ = SkipRootWithError(jsonBlob)
 	return
 }
 
