@@ -3,6 +3,7 @@ package common
 import (
 	"net/http"
 	"os"
+	"reflect"
 	"strings"
 	"testing"
 )
@@ -15,7 +16,7 @@ type responseBody struct {
 	Test requestBody `json:"url"`
 }
 
-// Hello is a simple hello function
+// Hello is a simple hello function.
 func StringTest(w http.ResponseWriter, _ *http.Request) { StringResponse(w, "Hello") }
 
 func JSONTest(w http.ResponseWriter, _ *http.Request) {
@@ -60,6 +61,7 @@ func TestJSONMarshall(t *testing.T) {
 		t.Errorf("Wanted JSON response and got %s", resp.Header.Get("Content-Type"))
 	}
 	checkResponse(t, rr, http.StatusOK)
+	resp.Body.Close()
 }
 
 func TestContentResponse(t *testing.T) {
@@ -78,6 +80,7 @@ func TestEmptyResponse(t *testing.T) {
 	if resp.StatusCode != 200 {
 		t.Errorf("Wanted status code and got %d", resp.StatusCode)
 	}
+	resp.Body.Close()
 }
 
 func TestEmptyBody(t *testing.T) {
@@ -90,6 +93,7 @@ func TestEmptyBody(t *testing.T) {
 	if resp.StatusCode != 200 {
 		t.Errorf("Wanted status code and got %d", resp.StatusCode)
 	}
+	resp.Body.Close()
 }
 
 func TestErrors(t *testing.T) {
@@ -101,9 +105,10 @@ func TestErrors(t *testing.T) {
 	} else if !strings.Contains(err.Error(), "unsupported protocol scheme") {
 		t.Errorf("Wanted bad protocol scheme and got %s", err)
 	}
-	if resp != nil {
+	if reflect.ValueOf(resp).IsNil() {
 		t.Error("Wanted empty response and it was not")
 	}
+	resp.Body.Close()
 }
 
 func TestGoodRequest(t *testing.T) {
@@ -117,6 +122,7 @@ func TestGoodRequest(t *testing.T) {
 	if resp.StatusCode != 200 {
 		t.Errorf("Wanted status code and got %d", resp.StatusCode)
 	}
+	resp.Body.Close()
 }
 
 func TestDownload(t *testing.T) {

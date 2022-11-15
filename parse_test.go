@@ -2,7 +2,6 @@ package common
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"os"
 	"reflect"
 	"testing"
@@ -31,7 +30,6 @@ func TestJSONParse(t *testing.T) {
 	if !reflect.DeepEqual(expectedStruct, testStruct) {
 		t.Errorf("The structs do not match. Expected %v, Actual %v", expectedStruct, testStruct)
 	}
-
 }
 
 func TestYAMLParse(t *testing.T) {
@@ -43,7 +41,6 @@ func TestYAMLParse(t *testing.T) {
 	if !reflect.DeepEqual(expectedStruct, testStruct) {
 		t.Errorf("The structs do not match. Expected %v, Actual %v", expectedStruct, testStruct)
 	}
-
 }
 
 func TestBadParse(t *testing.T) {
@@ -52,7 +49,7 @@ func TestBadParse(t *testing.T) {
 	if !os.IsNotExist(err) {
 		t.Errorf("Error with missing file. Wanted not exists error and got %s", err)
 	}
-	_ = ioutil.WriteFile("typo.jsno", []byte("test"), 0644)
+	_ = os.WriteFile("typo.jsno", []byte("test"), 0600)
 	err = ParseYamlOrJSON("typo.jsno", testStruct)
 	if err.Error() != "unknown file extension for: typo.jsno" {
 		t.Errorf("Wanted error with bad file extension. Got %s", err)
@@ -74,7 +71,7 @@ func TestEnvSecret(t *testing.T) {
 
 func TestFileSecret(t *testing.T) {
 	testData := "SecretSecret"
-	err := ioutil.WriteFile("test", []byte(testData), 0644)
+	err := os.WriteFile("test", []byte(testData), 0600)
 	if err != nil {
 		t.Errorf("Unable to write testing file. Error: %s", err)
 	}
@@ -147,16 +144,16 @@ type KeyValue struct {
 }
 
 func TestSkipRoot(t *testing.T) {
-	jsonString := `{"root": {"key": "value"}}`
+	jsonString := `{"root": {"key": "v"}}`
 	var Encoded KeyValue
 	_ = json.Unmarshal(SkipRoot([]byte(jsonString)), &Encoded)
-	if Encoded.Value != "value" {
-		t.Errorf("Wanted 'value' and got %s", Encoded.Value)
+	if Encoded.Value != "v" {
+		t.Errorf("Wanted 'v' and got %s", Encoded.Value)
 	}
 }
 
 func TestSkipRootMissingRoot(t *testing.T) {
-	jsonString := `{"key": "value"}`
+	jsonString := `{"key": "v"}`
 	var Encoded KeyValue
 	_ = json.Unmarshal(SkipRoot([]byte(jsonString)), &Encoded)
 

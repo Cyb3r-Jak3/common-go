@@ -98,15 +98,15 @@ func BenchmarkStringSearch2(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		StringSearch("hello", array)
 	}
-
 }
+
 func BenchmarkStringSearch10(b *testing.B) {
 	array := []string{"hello", "world", "hi", "mom", "and", "here", "are", "ten", "random", "words"}
 	for i := 0; i < b.N; i++ {
 		StringSearch("hello", array)
 	}
-
 }
+
 func BenchmarkFloatSearch2(b *testing.B) {
 	array := []float64{1.1, 1.2}
 	for i := 0; i < b.N; i++ {

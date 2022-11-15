@@ -13,7 +13,7 @@ import (
 func HashFile(algorithm string, filepath string) (value string, err error) {
 	f, err := os.Open(filepath) // #nosec
 	if err != nil {
-		err = fmt.Errorf("couldn't open %s. error reason %s", filepath, err.Error())
+		err = fmt.Errorf("couldn't open %s: %w", filepath, err)
 		return
 	}
 	var hasher hash.Hash
@@ -29,11 +29,11 @@ func HashFile(algorithm string, filepath string) (value string, err error) {
 		return
 	}
 	if _, err = io.Copy(hasher, f); err != nil {
-		err = fmt.Errorf("couldn't hash %s. error reason %s", filepath, err.Error())
+		err = fmt.Errorf("couldn't hash %s: %w", filepath, err)
 		return
 	}
 	if err = f.Close(); err != nil {
-		err = fmt.Errorf("error closing file: %s", err.Error())
+		err = fmt.Errorf("error closing file: %w", err)
 		return
 	}
 	value = fmt.Sprintf("%x", hasher.Sum(nil))

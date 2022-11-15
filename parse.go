@@ -61,7 +61,7 @@ func GetEnvSecret(secretName string) (secret string) {
 	return
 }
 
-// StringSearch checks an array of strings to see if the target string is in it
+// StringSearch checks an array of strings to see if the target string is in it.
 func StringSearch(target string, array []string) bool {
 	sort.Strings(array)
 	i := sort.SearchStrings(array, target)
@@ -71,7 +71,7 @@ func StringSearch(target string, array []string) bool {
 	return false
 }
 
-// FloatSearch checks an array of float64 to see if the target float is in it
+// FloatSearch checks an array of float64 to see if the target float is in it.
 func FloatSearch(target float64, array []float64) bool {
 	sort.Float64s(array)
 	i := sort.SearchFloat64s(array, target)
@@ -81,7 +81,7 @@ func FloatSearch(target float64, array []float64) bool {
 	return false
 }
 
-// IntSearch checks an array of ints to see if the target int is in it
+// IntSearch checks an array of ints to see if the target int is in it.
 func IntSearch(target int, array []int) bool {
 	sort.Ints(array)
 	i := sort.SearchInts(array, target)
@@ -91,7 +91,7 @@ func IntSearch(target int, array []int) bool {
 	return false
 }
 
-// GetEnv checks if the key exists in the environment variables. If yes then returns that value and if not returns default value
+// GetEnv checks if the key exists in the environment variables. If yes then returns that value and if not returns default value.
 func GetEnv(key, fallback string) string {
 	value, exists := os.LookupEnv(key)
 	if !exists {
@@ -100,7 +100,7 @@ func GetEnv(key, fallback string) string {
 	return value
 }
 
-// SkipRootWithError skips the root struct of a JSON message but will return an error. Taken from https://stackoverflow.com/a/20873511
+// SkipRootWithError skips the root struct of a JSON message but will return an error. Taken from https://stackoverflow.com/a/20873511.
 func SkipRootWithError(jsonBlob []byte) (json.RawMessage, error) {
 	var root map[string]json.RawMessage
 
@@ -113,13 +113,13 @@ func SkipRootWithError(jsonBlob []byte) (json.RawMessage, error) {
 	return nil, nil
 }
 
-// SkipRoot skips the root struct of a JSON message but will return nil if an error happens. Taken from https://stackoverflow.com/a/20873511
+// SkipRoot skips the root struct of a JSON message but will return nil if an error happens. Taken from https://stackoverflow.com/a/20873511.
 func SkipRoot(jsonBlob []byte) (values json.RawMessage) {
 	values, _ = SkipRootWithError(jsonBlob)
 	return
 }
 
-// EnvironMap returns a string map of environment variables
+// EnvironMap returns a string map of environment variables.
 func EnvironMap() map[string]string {
 	results := make(map[string]string)
 	for _, x := range os.Environ() {

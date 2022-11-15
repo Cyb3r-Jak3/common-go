@@ -3,6 +3,7 @@ package common
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io"
 	"log"
 	"net/http"
@@ -13,7 +14,7 @@ import (
 // JSONApplicationType is MIME type for JSON data.
 const JSONApplicationType = "application/json; charset=utf-8"
 
-// AllowedMethods is a decorator to only allow comma seperated methods.
+// AllowedMethods is a decorator to only allow comma separated methods.
 func AllowedMethods(handler http.HandlerFunc, methods string) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		if StringSearch(req.Method, strings.Split(methods, ",")) {
@@ -99,11 +100,11 @@ func DoJSONRequest(method, url string, requestBody, responseBody interface{}) (*
 	default:
 		decErr := json.NewDecoder(resp.Body).Decode(responseBody)
 		// ignore error if the JSON body is empty
-		if decErr == io.EOF {
+		if errors.Is(decErr, io.EOF) {
 			err = nil
 		}
 	}
-
+	resp.Body.Close()
 	return resp, err
 }
 
@@ -113,7 +114,7 @@ func DownloadFile(url, filename string) (ok bool, err error) {
 	if err != nil {
 		return false, err
 	}
-	resp, err := http.Get(url)
+	resp, err := http.Get(url) //#nosec G107 User should validate URL
 	if err != nil {
 		return false, err
 	}
