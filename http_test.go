@@ -3,7 +3,6 @@ package common
 import (
 	"net/http"
 	"os"
-	"reflect"
 	"strings"
 	"testing"
 )
@@ -96,8 +95,9 @@ func TestEmptyBody(t *testing.T) {
 	resp.Body.Close()
 }
 
+//nolint:bodyclose // Not needed to close request body.
 func TestErrors(t *testing.T) {
-	resp, err := DoJSONRequest(
+	_, err := DoJSONRequest(
 		"", "example.com", nil, nil,
 	)
 	if err == nil {
@@ -105,10 +105,6 @@ func TestErrors(t *testing.T) {
 	} else if !strings.Contains(err.Error(), "unsupported protocol scheme") {
 		t.Errorf("Wanted bad protocol scheme and got %s", err)
 	}
-	if reflect.ValueOf(resp).IsNil() {
-		t.Error("Wanted empty response and it was not")
-	}
-	resp.Body.Close()
 }
 
 func TestGoodRequest(t *testing.T) {
