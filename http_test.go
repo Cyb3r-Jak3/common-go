@@ -1,12 +1,10 @@
-package common_test
+package common
 
 import (
 	"net/http"
 	"os"
 	"strings"
 	"testing"
-
-	"github.com/Cyb3r-Jak3/common/v4"
 )
 
 type requestBody struct {
@@ -17,31 +15,31 @@ type responseBody struct {
 	Test requestBody `json:"url"`
 }
 
-// Hello is a simple hello function
-func StringTest(w http.ResponseWriter, _ *http.Request) { common.StringResponse(w, "Hello") }
+// Hello is a simple hello function.
+func StringTest(w http.ResponseWriter, _ *http.Request) { StringResponse(w, "Hello") }
 
 func JSONTest(w http.ResponseWriter, _ *http.Request) {
-	common.JSONResponse(w, []byte(`"hello": "world"`))
+	JSONResponse(w, []byte(`"hello": "world"`))
 }
 
 func JSONMarshalTest(w http.ResponseWriter, _ *http.Request) {
-	common.JSONMarshalResponse(w, &requestBody{Name: "test"})
+	JSONMarshalResponse(w, &requestBody{Name: "test"})
 }
 
 func JSONMarshalBadTest(w http.ResponseWriter, _ *http.Request) {
-	common.JSONMarshalResponse(w, nil)
+	JSONMarshalResponse(w, nil)
 }
 
 func ContentTest(w http.ResponseWriter, _ *http.Request) {
-	common.ContentResponse(w, "test/content", []byte("Hello"))
+	ContentResponse(w, "test/content", []byte("Hello"))
 }
 
 func TestAllowedMethod(t *testing.T) {
 	r, _ := http.NewRequest("GET", "/", nil)
-	rr := executeRequest(r, common.AllowedMethods(StringTest, "POST"))
+	rr := executeRequest(r, AllowedMethods(StringTest, "POST"))
 	checkResponse(t, rr, http.StatusMethodNotAllowed)
 	r, _ = http.NewRequest("POST", "/", nil)
-	rr = executeRequest(r, common.AllowedMethods(StringTest, "GET,POST"))
+	rr = executeRequest(r, AllowedMethods(StringTest, "GET,POST"))
 	checkResponse(t, rr, http.StatusOK)
 }
 
@@ -58,10 +56,11 @@ func TestJSONMarshall(t *testing.T) {
 	}
 	rr := executeRequest(r, JSONMarshalTest)
 	resp := rr.Result()
-	if resp.Header.Get("Content-Type") != common.JSONApplicationType {
+	if resp.Header.Get("Content-Type") != JSONApplicationType {
 		t.Errorf("Wanted JSON response and got %s", resp.Header.Get("Content-Type"))
 	}
 	checkResponse(t, rr, http.StatusOK)
+	resp.Body.Close()
 }
 
 func TestContentResponse(t *testing.T) {
@@ -71,7 +70,7 @@ func TestContentResponse(t *testing.T) {
 }
 
 func TestEmptyResponse(t *testing.T) {
-	resp, err := common.DoJSONRequest(
+	resp, err := DoJSONRequest(
 		"", "https://httpbin.org/anything", &requestBody{Name: "value"}, nil,
 	)
 	if err != nil {
@@ -80,10 +79,11 @@ func TestEmptyResponse(t *testing.T) {
 	if resp.StatusCode != 200 {
 		t.Errorf("Wanted status code and got %d", resp.StatusCode)
 	}
+	resp.Body.Close()
 }
 
 func TestEmptyBody(t *testing.T) {
-	resp, err := common.DoJSONRequest(
+	resp, err := DoJSONRequest(
 		"", "https://httpbin.org/anything", nil, nil,
 	)
 	if err != nil {
@@ -92,10 +92,12 @@ func TestEmptyBody(t *testing.T) {
 	if resp.StatusCode != 200 {
 		t.Errorf("Wanted status code and got %d", resp.StatusCode)
 	}
+	resp.Body.Close()
 }
 
+//nolint:bodyclose // Not needed to close request body.
 func TestErrors(t *testing.T) {
-	resp, err := common.DoJSONRequest(
+	_, err := DoJSONRequest(
 		"", "example.com", nil, nil,
 	)
 	if err == nil {
@@ -103,14 +105,11 @@ func TestErrors(t *testing.T) {
 	} else if !strings.Contains(err.Error(), "unsupported protocol scheme") {
 		t.Errorf("Wanted bad protocol scheme and got %s", err)
 	}
-	if resp != nil {
-		t.Error("Wanted empty response and it was not")
-	}
 }
 
 func TestGoodRequest(t *testing.T) {
 	var respBody responseBody
-	resp, err := common.DoJSONRequest(
+	resp, err := DoJSONRequest(
 		"GET", "https://httpbin.org/anything", &requestBody{Name: "Hello"}, &respBody,
 	)
 	if err != nil {
@@ -119,10 +118,11 @@ func TestGoodRequest(t *testing.T) {
 	if resp.StatusCode != 200 {
 		t.Errorf("Wanted status code and got %d", resp.StatusCode)
 	}
+	resp.Body.Close()
 }
 
 func TestDownload(t *testing.T) {
-	ok, err := common.DownloadFile(
+	ok, err := DownloadFile(
 		"https://raw.githubusercontent.com/Cyb3r-Jak3/Cyb3r-Jak3/main/README.md",
 		"test.md",
 	)
@@ -133,7 +133,7 @@ func TestDownload(t *testing.T) {
 }
 
 func TestFailedDownload(t *testing.T) {
-	ok, err := common.DownloadFile(
+	ok, err := DownloadFile(
 		"",
 		"test.md",
 	)
@@ -144,7 +144,7 @@ func TestFailedDownload(t *testing.T) {
 }
 
 func TestWriteDownload(t *testing.T) {
-	ok, err := common.DownloadFile(
+	ok, err := DownloadFile(
 		"https://raw.githubusercontent.com/Cyb3r-Jak3/Cyb3r-Jak3/main/README.md",
 		"",
 	)
