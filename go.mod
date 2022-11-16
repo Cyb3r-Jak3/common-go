@@ -1,4 +1,4 @@
-module github.com/Cyb3r-Jak3/common/v4
+module github.com/Cyb3r-Jak3/common/v5
 
 go 1.18
 
