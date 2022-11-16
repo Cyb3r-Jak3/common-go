@@ -9,31 +9,30 @@ Tested with go versions 1.18 & 1.19.
 
 ### Benchmark
 
-Benchmarks are taken from latest-ubuntu and go version 1.17.
+Benchmarks are taken from latest-ubuntu and go version 1.19.
 
 ```
-BenchmarkJSONResponse-2           	 1513520	       767.4 ns/op	    1024 B/op	      10 allocs/op
-BenchmarkWOAllowedMethod-2        	 1550850	       773.7 ns/op	    1016 B/op	      10 allocs/op
-BenchmarkAllowedMethods-2         	 1271031	      1005 ns/op	    1088 B/op	      13 allocs/op
-BenchmarkDeniedAllowedMethods-2   	 1000000	      1213 ns/op	    1128 B/op	      14 allocs/op
-BenchmarkContentResponse-2        	 1555020	       776.5 ns/op	    1013 B/op	      10 allocs/op
-BenchmarkStringResponse-2         	 1527940	       782.8 ns/op	    1016 B/op	      10 allocs/op
-BenchmarkJSONMarshall-2           	 1264372	       965.7 ns/op	    1024 B/op	      10 allocs/op
-BenchmarkGenerate-2               	  764608	      1643 ns/op
-BenchmarkJSONParse-2              	  711868	      1589 ns/op	      80 B/op	       2 allocs/op
-BenchmarkYAMLParse-2              	  764983	      1600 ns/op	      80 B/op	       2 allocs/op
-BenchmarkStringSearch2-2          	16068895	        70.55 ns/op
-BenchmarkStringSearch10-2         	 6211059	       190.5 ns/op
-BenchmarkFloatSearch2-2           	21945752	        54.78 ns/op
-BenchmarkFloatSearch10-2          	10253065	       122.2 ns/op
-BenchmarkIntSearch2-2             	21588042	        56.26 ns/op
-BenchmarkIntSearch10-2            	11035240	       117.7 ns/op
-BenchmarkGetEnv-2                 	30184161	        38.63 ns/op	       0 B/op	       0 allocs/op
-BenchmarkGetEnvMissing-2          	32234304	        37.16 ns/op
-BenchmarkSHA256-2                 	   81972	     14140 ns/op
-BenchmarkSHA384-2                 	   89167	     13359 ns/op
-BenchmarkSHA512-2                 	   90374	     14348 ns/op
-BenchmarkToHex-2                  	 7411296	       151.0 ns/op
-BenchmarkSkipRoot-2               	  966310	      1210 ns/op
-BenchmarkEnvironMap-2             	   52266	     22935 ns/op
+BenchmarkJSONResponse-2           	 1450099	       829.3 ns/op	    1024 B/op	      10 allocs/op
+BenchmarkWOAllowedMethod-2        	 1439946	       836.9 ns/op	    1016 B/op	      10 allocs/op
+BenchmarkAllowedMethods-2         	 1000000	      1011 ns/op	    1088 B/op	      13 allocs/op
+BenchmarkDeniedAllowedMethods-2   	  849014	      1272 ns/op	    1128 B/op	      14 allocs/op
+BenchmarkContentResponse-2        	 1444442	       920.3 ns/op	    1013 B/op	      10 allocs/op
+BenchmarkStringResponse-2         	 1427762	       839.8 ns/op	    1016 B/op	      10 allocs/op
+BenchmarkJSONMarshall-2           	  988467	      1037 ns/op	    1024 B/op	      10 allocs/op
+BenchmarkGenerate-2               	  810075	      1486 ns/op
+BenchmarkJSONParse-2              	  769706	      1631 ns/op	      80 B/op	       2 allocs/op
+BenchmarkYAMLParse-2              	  678457	      1614 ns/op	      80 B/op	       2 allocs/op
+BenchmarkStringSearch2-2          	15896445	        73.79 ns/op
+BenchmarkStringSearch10-2         	 7631498	       157.9 ns/op
+BenchmarkFloatSearch2-2           	20262049	        58.03 ns/op
+BenchmarkFloatSearch10-2          	10148270	       117.0 ns/op
+BenchmarkIntSearch2-2             	19276776	        61.46 ns/op
+BenchmarkIntSearch10-2            	10009627	       118.8 ns/op
+BenchmarkGetEnv-2                 	31326195	        37.50 ns/op	       0 B/op	       0 allocs/op
+BenchmarkGetEnvMissing-2          	32664105	        36.51 ns/op
+BenchmarkSHA256-2                 	   70501	     16564 ns/op
+BenchmarkSHA384-2                 	   77529	     15798 ns/op
+BenchmarkSHA512-2                 	   74725	     15967 ns/op
+BenchmarkSkipRoot-2               	  816931	      1310 ns/op
+BenchmarkEnvironMap-2             	   44618	     26481 ns/op
 ```
