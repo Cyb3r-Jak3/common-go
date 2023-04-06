@@ -209,3 +209,17 @@ func TestEnvironMap(t *testing.T) {
 	os.Unsetenv("test")
 	os.Setenv("TestWithEquals", "value=value")
 }
+
+func TestFileExists(t *testing.T) {
+	if FileExists("test") {
+		t.Error("Wanted false and got true")
+	}
+	err := os.WriteFile("test", []byte("test"), 0600)
+	if err != nil {
+		t.Error("Unable to write test file")
+	}
+	if !FileExists("test") {
+		t.Error("Wanted true and got false")
+	}
+	os.Remove("test")
+}

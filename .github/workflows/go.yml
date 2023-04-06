@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        go: [ '1.18', '1.19']
+        go: [ '1.18', '1.19', '1.20']
     runs-on: ${{ matrix.os }}
     env:
       GO111MODULE: on
@@ -51,15 +51,11 @@ jobs:
     - name: Benchmark
       run: make bench
 
-    - name: Coverage to Deepsource
-      if: ${{ runner.os == 'Linux' && env.DEEPSOURCE_DSN != null }}
-      run: |
-        curl https://deepsource.io/cli | sh
-        ./bin/deepsource report --analyzer test-coverage --key go --value-file c.out
-      env: 
-        DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
-      
     - uses: codecov/codecov-action@v3
       with:
         files: c.out
         fail_ci_if_error: true
+        env_vars: GO,OS
+      env:
+        GO: ${ { matrix.go }}
+        OS: ${{ runner.os }}
