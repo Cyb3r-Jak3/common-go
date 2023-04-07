@@ -2,7 +2,9 @@ package common
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"sort"
@@ -25,20 +27,20 @@ import (
 // response := new(exampleStruct)
 //
 // err := ParseYamlOrJSON("helloworld.yml" response); err != nil { log.Fatal(err)}.
-func ParseYamlOrJSON(fileName string, outputInterface interface{}) (err error) {
+func ParseYamlOrJSON(fileName string, outputInterface interface{}) error {
 	fileName = filepath.Clean(fileName)
 	file, err := os.ReadFile(fileName)
 	if err != nil {
-		return
+		return err
 	}
-	if strings.HasSuffix(fileName, ".json") {
-		err = json.Unmarshal(file, outputInterface)
-	} else if strings.HasSuffix(fileName, ".yaml") || strings.HasSuffix(fileName, ".yml") {
-		err = yaml.Unmarshal(file, outputInterface)
-	} else {
-		err = fmt.Errorf("unknown file extension for: %s", fileName)
+	switch filepath.Ext(fileName) {
+	case ".json":
+		return json.Unmarshal(file, outputInterface)
+	case ".yaml", ".yml":
+		return yaml.Unmarshal(file, outputInterface)
+	default:
+		return fmt.Errorf("unknown file extension for: %s", fileName)
 	}
-	return err
 }
 
 // GetEnvSecret will get either a OS environment variable. If there is no environment variable set it will check to see if a variable with _FILE is set.
@@ -127,4 +129,15 @@ func EnvironMap() map[string]string {
 		results[item[0]] = item[1]
 	}
 	return results
+}
+
+// FileExists is a function to check if the file exists at the path.
+func FileExists(filename string) bool {
+	_, err := os.Stat(filename)
+	if err != nil {
+		if errors.Is(err, fs.ErrNotExist) {
+			return false
+		}
+	}
+	return true
 }
