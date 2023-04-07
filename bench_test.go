@@ -2,7 +2,6 @@ package common
 
 import (
 	"net/http"
-	"os"
 	"testing"
 )
 
@@ -136,7 +135,7 @@ func BenchmarkIntSearch10(b *testing.B) {
 }
 
 func BenchmarkGetEnv(b *testing.B) {
-	os.Setenv("test", "value")
+	b.Setenv("test", "value")
 	b.ReportAllocs()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {

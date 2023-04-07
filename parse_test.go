@@ -58,7 +58,7 @@ func TestBadParse(t *testing.T) {
 }
 
 func TestEnvSecret(t *testing.T) {
-	os.Setenv("HELLO", "World")
+	t.Setenv("HELLO", "World")
 	secret := GetEnvSecret("Hello")
 	if secret != "World" {
 		t.Errorf("Error getting Environment Variable. Wanted Hello and got %s", secret)
@@ -79,12 +79,12 @@ func TestFileSecret(t *testing.T) {
 	if secret != "" {
 		t.Errorf("Wanted blank output. Got %s", secret)
 	}
-	os.Setenv("TEST_FILE", "test")
+	t.Setenv("TEST_FILE", "test")
 	secret = GetEnvSecret("test")
 	if secret != testData {
 		t.Errorf("Error getting secret file. Wanted 'SecretSecret' got %s", secret)
 	}
-	os.Setenv("TEST_FILE", "emptyfile")
+	t.Setenv("TEST_FILE", "emptyfile")
 	secret = GetEnvSecret("test")
 	if secret != "" {
 		t.Errorf("Wanted blank output for missing file. Got %s", secret)
@@ -127,7 +127,7 @@ func TestIntSearch(t *testing.T) {
 
 func TestGetEnv(t *testing.T) {
 	expectedValue := "value"
-	os.Setenv("test", expectedValue)
+	t.Setenv("test", expectedValue)
 	returnValue := GetEnv("test", "")
 	if returnValue != expectedValue {
 		t.Errorf("Wanted 'value' and got %s", returnValue)
@@ -136,7 +136,6 @@ func TestGetEnv(t *testing.T) {
 	if returnValue != "test" {
 		t.Errorf("Wanted 'test' and got %s", returnValue)
 	}
-	os.Unsetenv("test")
 }
 
 type KeyValue struct {
@@ -194,8 +193,8 @@ func TestSkipRootWithErrorMissingRoot(t *testing.T) {
 }
 
 func TestEnvironMap(t *testing.T) {
-	os.Setenv("Test", "value")
-	os.Setenv("TestWithEquals", "value=value")
+	t.Setenv("Test", "value")
+	t.Setenv("TestWithEquals", "value=value")
 	result := EnvironMap()
 	if len(result) == 0 {
 		t.Error("Returned map has no length")
@@ -206,8 +205,6 @@ func TestEnvironMap(t *testing.T) {
 	if result["TestWithEquals"] != "value=value" {
 		t.Errorf("Wanted 'value=value' and got %s", result["TestWithEquals"])
 	}
-	os.Unsetenv("test")
-	os.Setenv("TestWithEquals", "value=value")
 }
 
 func TestFileExists(t *testing.T) {
