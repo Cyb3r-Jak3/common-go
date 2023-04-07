@@ -179,3 +179,14 @@ func BenchmarkEnvironMap(b *testing.B) {
 		EnvironMap()
 	}
 }
+
+func BenchmarkFileExists(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		FileExists("go.mod")
+	}
+}
+func BenchmarkFileExistsMissing(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		FileExists("missing.go")
+	}
+}

@@ -43,7 +43,7 @@ func ParseYamlOrJSON(fileName string, outputInterface interface{}) error {
 	}
 }
 
-// GetEnvSecret will get either a OS environment variable. If there is no environment variable set it will check to see if a variable with _FILE is set.
+// GetEnvSecret will get either an OS environment variable. If there is no environment variable set it will check to see if a variable with _FILE is set.
 // If so then it will read the secret name as a filepath and return the content.
 func GetEnvSecret(secretName string) (secret string) {
 	secretName = strings.ToUpper(secretName)
@@ -83,7 +83,7 @@ func FloatSearch(target float64, array []float64) bool {
 	return false
 }
 
-// IntSearch checks an array of ints to see if the target int is in it.
+// IntSearch checks an array of integers to see if the target int is in it.
 func IntSearch(target int, array []int) bool {
 	sort.Ints(array)
 	i := sort.SearchInts(array, target)

@@ -41,11 +41,7 @@ func TestYAMLParse(t *testing.T) {
 	if !reflect.DeepEqual(expectedStruct, testStruct) {
 		t.Errorf("The structs do not match. Expected %v, Actual %v", expectedStruct, testStruct)
 	}
-}
-
-func TestBadParse(t *testing.T) {
-	testStruct := new(testStruct)
-	err := ParseYamlOrJSON("no_file", testStruct)
+	err = ParseYamlOrJSON("no_file", testStruct)
 	if !os.IsNotExist(err) {
 		t.Errorf("Error with missing file. Wanted not exists error and got %s", err)
 	}
