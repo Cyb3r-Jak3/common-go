@@ -122,7 +122,7 @@ func TestIntSearch(t *testing.T) {
 }
 
 func TestGetEnv(t *testing.T) {
-	expectedValue := "value"
+	const expectedValue = "value"
 	t.Setenv("test", expectedValue)
 	returnValue := GetEnv("test", "")
 	if returnValue != expectedValue {
@@ -215,4 +215,16 @@ func TestFileExists(t *testing.T) {
 		t.Error("Wanted true and got false")
 	}
 	os.Remove("test")
+}
+
+func TestGetDefaultFromEnv(t *testing.T) {
+	t.Setenv("test", "value")
+	result := GetDefaultFromEnv("test", "default")
+	if result != "value" {
+		t.Errorf("Wanted 'value' and got %s", result)
+	}
+	result = GetDefaultFromEnv("missing", "default")
+	if result != "default" {
+		t.Errorf("Wanted 'default' and got %s", result)
+	}
 }

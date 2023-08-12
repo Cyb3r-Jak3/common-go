@@ -190,3 +190,10 @@ func BenchmarkFileExistsMissing(b *testing.B) {
 		FileExists("missing.go")
 	}
 }
+
+func BenchmarkGetDefaultFromEnv(b *testing.B) {
+	b.Setenv("test", "value")
+	for i := 0; i < b.N; i++ {
+		GetDefaultFromEnv("test", "default")
+	}
+}
