@@ -141,3 +141,11 @@ func FileExists(filename string) bool {
 	}
 	return true
 }
+
+// GetDefaultFromEnv checks if the key exists in the environment variables. If yes then returns that value and if not returns default value.
+func GetDefaultFromEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
+}
