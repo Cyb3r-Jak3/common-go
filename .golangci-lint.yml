@@ -1,33 +1,49 @@
+version: "2"
 run:
-
-  # default is true. Enables skipping of directories:
-  #   vendor$, third_party$, testdata$, examples$, Godeps$, builtin$
-  skip-dirs-use-default: true
-
   modules-download-mode: readonly
-
+output:
+  formats:
+    text:
+      path: stderr
 linters:
   enable:
-    - staticcheck
-    - exportloopref
-    - dupl
-    - govet
-    - funlen
-    - gocritic
-    - goconst
-    - tenv
-    - ineffassign
     - bodyclose
-    - gosec
-    - prealloc
-    - unused
-    - gofmt
-    - revive
-    - stylecheck
-    - whitespace
-    - goprintffuncname
-    - gosimple
+    - dupl
+    - goconst
     - gocyclo
-
-output:
-  format: colored-line-number
+    - godot
+    - goprintffuncname
+    - gosec
+    - misspell
+    - nilerr
+    - prealloc
+    - reassign
+    - revive
+    - staticcheck
+    - unconvert
+    - usetesting
+    - whitespace
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - path: (.+)\.go$
+        text: exclude-dirs-use-default
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
