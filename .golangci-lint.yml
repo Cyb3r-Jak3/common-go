@@ -33,6 +33,10 @@ linters:
     rules:
       - path: (.+)\.go$
         text: exclude-dirs-use-default
+      - linters:
+          - revive
+        path: '(.+)\.go$'
+        text: 'var-naming: avoid meaningless package names'
     paths:
       - third_party$
       - builtin$
