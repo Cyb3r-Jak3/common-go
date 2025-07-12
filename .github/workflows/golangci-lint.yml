@@ -23,13 +23,14 @@ jobs:
       GO111MODULE: on
 
     steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Install Go
         uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
-
-      - name: Checkout code
-        uses: actions/checkout@v4
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v8
