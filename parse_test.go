@@ -236,8 +236,8 @@ func TestResilientTimeParsesRFC3339WithTimezone(t *testing.T) {
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
 	}
-	if rt.Time.Format(time.RFC3339) != "2023-03-15T14:30:00Z" {
-		t.Errorf("Expected '2023-03-15T14:30:00Z', got %s", rt.Time.Format(time.RFC3339))
+	if rt.Format(time.RFC3339) != "2023-03-15T14:30:00Z" {
+		t.Errorf("Expected '2023-03-15T14:30:00Z', got %s", rt.Format(time.RFC3339))
 	}
 }
 
@@ -247,8 +247,8 @@ func TestResilientTimeParsesRFC3339WithoutTimezone(t *testing.T) {
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
 	}
-	if rt.Time.Format("2006-01-02T15:04:05") != "2023-03-15T14:30:00" {
-		t.Errorf("Expected '2023-03-15T14:30:00', got %s", rt.Time.Format("2006-01-02T15:04:05"))
+	if rt.Format("2006-01-02T15:04:05") != "2023-03-15T14:30:00" {
+		t.Errorf("Expected '2023-03-15T14:30:00', got %s", rt.Format("2006-01-02T15:04:05"))
 	}
 }
 
@@ -258,8 +258,8 @@ func TestResilientTimeParsesRFC3339WithoutFractionalSeconds(t *testing.T) {
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
 	}
-	if rt.Time.Format("2006-01-02T15:04:05.999999") != "2023-03-15T14:30:00.123456" {
-		t.Errorf("Expected '2023-03-15T14:30:00.123456', got %s", rt.Time.Format("2006-01-02T15:04:05.999999"))
+	if rt.Format("2006-01-02T15:04:05.999999") != "2023-03-15T14:30:00.123456" {
+		t.Errorf("Expected '2023-03-15T14:30:00.123456', got %s", rt.Format("2006-01-02T15:04:05.999999"))
 	}
 }
 
@@ -269,7 +269,7 @@ func TestResilientTimeHandlesNullValue(t *testing.T) {
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
 	}
-	if !rt.Time.IsZero() {
+	if !rt.IsZero() {
 		t.Errorf("Expected zero time, got %s", rt.Time)
 	}
 }
