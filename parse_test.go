@@ -290,7 +290,7 @@ func TestResilientTimeHandlesEmptyInput(t *testing.T) {
 	}
 }
 
-func ParseResilientTimeParsesRFC3339WithTimezone(t *testing.T) {
+func TestParseResilientTime_ParseRFC3339WithTimezone(t *testing.T) {
 	rt, err := ParseResilientTime("2023-03-15T14:30:00Z")
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
@@ -300,7 +300,7 @@ func ParseResilientTimeParsesRFC3339WithTimezone(t *testing.T) {
 	}
 }
 
-func ParseResilientTimeParsesRFC3339WithoutTimezone(t *testing.T) {
+func TestParseResilientTime_ParseRFC3339WithoutTimezone(t *testing.T) {
 	rt, err := ParseResilientTime("2023-03-15T14:30:00")
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
@@ -310,7 +310,7 @@ func ParseResilientTimeParsesRFC3339WithoutTimezone(t *testing.T) {
 	}
 }
 
-func ParseResilientTimeParsesRFC3339WithoutFractionalSeconds(t *testing.T) {
+func TestParseResilientTime_ParseRFC3339WithoutFractionalSeconds(t *testing.T) {
 	rt, err := ParseResilientTime("2023-03-15T14:30:00.123456")
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
@@ -320,7 +320,7 @@ func ParseResilientTimeParsesRFC3339WithoutFractionalSeconds(t *testing.T) {
 	}
 }
 
-func ParseResilientTimeHandlesNullValue(t *testing.T) {
+func TestParseResilientTime_HandlesNullValue(t *testing.T) {
 	rt, err := ParseResilientTime("null")
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
@@ -330,14 +330,14 @@ func ParseResilientTimeHandlesNullValue(t *testing.T) {
 	}
 }
 
-func ParseResilientTimeReturnsErrorForInvalidFormat(t *testing.T) {
+func TestParseResilientTime_ReturnsErrorForInvalidFormat(t *testing.T) {
 	_, err := ParseResilientTime("invalid-time-format")
 	if err == nil {
 		t.Error("Expected an error, but got none")
 	}
 }
 
-func ParseResilientTimeHandlesEmptyInput(t *testing.T) {
+func TestParseResilientTime_HandlesEmptyInput(t *testing.T) {
 	_, err := ParseResilientTime("")
 	if err == nil {
 		t.Error("Expected an error, but got none")
