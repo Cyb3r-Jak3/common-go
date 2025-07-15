@@ -25,7 +25,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       GO111MODULE: on
-      GOTESTSUM_VERSION: v1.12.3
+      GOTESTSUM_VERSION: v1.11.0
 
     steps:
     - name: Install Go
