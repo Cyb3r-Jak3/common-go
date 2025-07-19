@@ -204,3 +204,8 @@ func ParseResilientTime(s string) (ResilientTime, error) {
 	}
 	return ResilientTime{}, fmt.Errorf("cannot parse time: %s", s)
 }
+
+// Ptr returns a pointer to the given value.
+func Ptr[T any](v T) *T {
+	return &v
+}

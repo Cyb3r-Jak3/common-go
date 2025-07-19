@@ -26,10 +26,6 @@ func JSONMarshalTest(w http.ResponseWriter, _ *http.Request) {
 	JSONMarshalResponse(w, &requestBody{Name: "test"})
 }
 
-func JSONMarshalBadTest(w http.ResponseWriter, _ *http.Request) {
-	JSONMarshalResponse(w, nil)
-}
-
 func ContentTest(w http.ResponseWriter, _ *http.Request) {
 	ContentResponse(w, "test/content", []byte("Hello"))
 }
