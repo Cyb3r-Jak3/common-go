@@ -343,3 +343,24 @@ func TestParseResilientTime_HandlesEmptyInput(t *testing.T) {
 		t.Error("Expected an error, but got none")
 	}
 }
+
+func TestPtr(t *testing.T) {
+	value := "test"
+	ptr := Ptr(value)
+
+	if *ptr != value {
+		t.Errorf("Expected pointer to point to %s, got %s", value, *ptr)
+	}
+	numValue := 42
+	numPtr := Ptr(numValue)
+
+	if *numPtr != numValue {
+		t.Errorf("Expected pointer to point to %d, got %d", numValue, *numPtr)
+	}
+
+	floatValue := 3.14
+	floatPtr := Ptr(floatValue)
+	if *floatPtr != floatValue {
+		t.Errorf("Expected pointer to point to %f, got %f", floatValue, *floatPtr)
+	}
+}

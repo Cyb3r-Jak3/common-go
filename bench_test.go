@@ -197,3 +197,18 @@ func BenchmarkGetDefaultFromEnv(b *testing.B) {
 		GetDefaultFromEnv("test", "default")
 	}
 }
+
+func BenchmarkGetDefaultFromEnvMissing(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		GetDefaultFromEnv("missing", "default")
+	}
+}
+
+func BenchmarkParseResilientTime(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _ = ParseResilientTime("2023-01-01T00:00:00Z")
+	}
+}
