@@ -212,3 +212,19 @@ func BenchmarkParseResilientTime(b *testing.B) {
 		_, _ = ParseResilientTime("2023-01-01T00:00:00Z")
 	}
 }
+
+func BenchmarkClampInt(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		ClampInt(5, 1, 10)
+	}
+}
+
+func BenchmarkClampFloat(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		ClampFloat(5.5, 1.0, 10.0)
+	}
+}
