@@ -151,23 +151,23 @@ func GetDefaultFromEnv(key, fallback string) string {
 }
 
 // ClampInt clamps an integer value between a minimum and maximum value.
-func ClampInt(value, min, max int) int {
-	if value < min {
-		return min
+func ClampInt(value, minVal, maxVal int) int {
+	if value < minVal {
+		return minVal
 	}
-	if value > max {
-		return max
+	if value > maxVal {
+		return maxVal
 	}
 	return value
 }
 
 // ClampFloat clamps a float64 value between a minimum and maximum value.
-func ClampFloat(value, min, max float64) float64 {
-	if value < min {
-		return min
+func ClampFloat(value, minVal, maxVal float64) float64 {
+	if value < minVal {
+		return minVal
 	}
-	if value > max {
-		return max
+	if value > maxVal {
+		return maxVal
 	}
 	return value
 }
