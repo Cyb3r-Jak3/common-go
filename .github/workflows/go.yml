@@ -25,8 +25,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       GO111MODULE: on
-      # renovate: datasource=github-tags depName=gotestyourself/gotestsum
-      GOTESTSUM_VERSION: v1.13.0
+      GOTESTSUM_VERSION: v1.11.0
 
     steps:
     - name: Install Go
