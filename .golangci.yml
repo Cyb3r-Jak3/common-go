@@ -37,6 +37,12 @@ linters:
           - revive
         path: '(.+)\.go$'
         text: 'var-naming: avoid meaningless package names'
+      - path: _test\.go$
+        linters:
+          - goconst
+          - gocyclo
+          - dupl
+          - gosec
     paths:
       - third_party$
       - builtin$

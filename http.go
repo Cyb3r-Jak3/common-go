@@ -2,6 +2,7 @@ package common
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"io"
@@ -75,16 +76,22 @@ func ContentResponse(w http.ResponseWriter, contentType string, response []byte)
 //
 // resp, err := DoJSONRequest("POST", "http://example.com", nil, response).
 func DoJSONRequest(method, url string, requestBody, responseBody interface{}) (*http.Response, error) {
+	return DoJSONRequestWithContext(context.Background(), method, url, requestBody, responseBody)
+}
+
+// DoJSONRequestWithContext sends a client JSON request with a context. The responseBody should be a pointer to the address of a struct.
+func DoJSONRequestWithContext(ctx context.Context, method, url string, requestBody, responseBody interface{}) (*http.Response, error) {
 	if method == "" {
 		method = "POST"
 	}
+	// Remove redundant method check
 	payloadBuf := new(bytes.Buffer)
 	if requestBody != nil {
 		if err := json.NewEncoder(payloadBuf).Encode(requestBody); err != nil {
 			return nil, err
 		}
 	}
-	req, err := http.NewRequest(method, url, payloadBuf)
+	req, err := http.NewRequestWithContext(ctx, method, url, payloadBuf)
 	if err != nil {
 		return nil, err
 	}
@@ -110,11 +117,20 @@ func DoJSONRequest(method, url string, requestBody, responseBody interface{}) (*
 
 // DownloadFile downloads a file and writes it to the file path. Overwrites any file at the path.
 func DownloadFile(url, filename string) (ok bool, err error) {
+	return DownloadFileWithContext(context.Background(), url, filename)
+}
+
+// DownloadFileWithContext downloads a file and writes it to the file path using the provided context. Overwrites any file at the path.
+func DownloadFileWithContext(ctx context.Context, url, filename string) (ok bool, err error) {
 	out, err := os.Create(filename)
 	if err != nil {
 		return false, err
 	}
-	resp, err := http.Get(url) //#nosec G107 User should validate URL
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return false, err
+	}
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return false, err
 	}
